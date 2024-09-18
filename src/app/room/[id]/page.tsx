@@ -11,36 +11,26 @@ import {
   useSocketContext,
 } from "@/lib/hooks/hooks";
 import { useRoomId } from "@/lib/hooks/use-room-id";
-import { InitialRoomData } from "@/shared/types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function RoomIdPage() {
-  const { joinRoom, id: socketId } = useSocketContext();
-  const { setPlayers } = useRoomContext();
-  const { setupInitials } = usePuzzleContext();
-  const [initialData, setInitialData] = useState<InitialRoomData | null>(null);
+  const { joinRoom, id } = useSocketContext();
+  const { tiles } = usePuzzleContext();
+  // const [initialData, setInitialData] = useState<InitialRoomData | null>(null);
 
   const roomId = useRoomId();
 
-  console.log("rerender");
-
   useEffect(() => {
-    const fetchRoomData = async () => {
-      const data = await joinRoom(roomId);
-      if (data) {
-        setupInitials(data);
-        setInitialData(data);
-        setPlayers(data.players || []);
-      }
-    };
+    joinRoom(roomId);
+  }, [id]);
 
-    fetchRoomData();
-  }, [roomId, setPlayers, socketId]);
+  console.log("render");
+  console.log(tiles);
 
   return (
     <div className="flex h-screen justify-center items-center">
-      {!initialData && <div>Loading...</div>}
-      {initialData && (
+      {!tiles && <div>Loading...</div>}
+      {tiles && (
         // <PuzzleContextProvider
         //   progressBoard={initialData.progressBoard}
         //   basePuzzle={initialData.basePuzzle}

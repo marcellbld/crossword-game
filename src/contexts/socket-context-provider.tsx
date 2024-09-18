@@ -13,7 +13,7 @@ import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
 
 type TSocketContext = {
   id: string | null;
-  joinRoom: (roomId: string) => Promise<InitialRoomData | null>;
+  joinRoom: (roomId: string) => void;
   setLetter: (data: SetLetterSocketData) => void;
 };
 
@@ -25,8 +25,8 @@ export default function SocketContextProvider({
   children: React.ReactNode;
 }) {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const { addPlayer, removePlayer, addScore } = useRoomContext();
-  const { setLetter: setPuzzleLetter } = usePuzzleContext();
+  const { addPlayer, removePlayer, addScore, setPlayers } = useRoomContext();
+  const { setLetter: setPuzzleLetter, setupInitials } = usePuzzleContext();
 
   useEffect(() => {
     const socket = io({
@@ -52,40 +52,38 @@ export default function SocketContextProvider({
     };
   }, []);
 
-  const joinRoom = async (roomId: string): Promise<InitialRoomData | null> => {
-    return new Promise((resolve, reject) => {
-      if (!socket) return reject();
+  const joinRoom = (roomId: string) => {
+    if (!socket) return;
 
-      socket.emit("join-room", roomId, (data: InitialRoomData) => {
-        if (data) {
-          socket.on(SocketEvent.JOINED_ROOM, data => {
-            addPlayer(data);
-          });
-          socket.on(SocketEvent.LEFT_ROOM, data => {
-            removePlayer(data);
-          });
-          socket.on(
-            SocketEvent.SET_LETTER,
-            ({
-              socketId,
-              position,
-              letter,
-              success,
-            }: SetLetterSocketCallbackData) => {
-              setPuzzleLetter({ socketId, position, letter, success });
-            }
-          );
-          socket.on(
-            SocketEvent.CHANGED_PLAYER_SCORE,
-            ({ socketId, score }: PlayerScoreChangedData) => {
-              addScore(socketId, score);
-            }
-          );
-          resolve(data);
-        } else {
-          reject(new Error("No data received from the server"));
-        }
-      });
+    socket.emit("join-room", roomId, (data: InitialRoomData) => {
+      if (data) {
+        setupInitials(data);
+        setPlayers(data.players || []);
+
+        socket.on(SocketEvent.JOINED_ROOM, data => {
+          addPlayer(data);
+        });
+        socket.on(SocketEvent.LEFT_ROOM, data => {
+          removePlayer(data);
+        });
+        socket.on(
+          SocketEvent.SET_LETTER,
+          ({
+            socketId,
+            position,
+            letter,
+            success,
+          }: SetLetterSocketCallbackData) => {
+            setPuzzleLetter({ socketId, position, letter, success });
+          }
+        );
+        socket.on(
+          SocketEvent.CHANGED_PLAYER_SCORE,
+          ({ socketId, score }: PlayerScoreChangedData) => {
+            addScore(socketId, score);
+          }
+        );
+      }
     });
   };
 

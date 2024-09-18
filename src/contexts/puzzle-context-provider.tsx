@@ -89,6 +89,8 @@ export default function PuzzleContextProvider({
     }
 
     setTiles(map);
+
+    console.log("SET TILES");
   };
 
   const setLetter = ({
