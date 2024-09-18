@@ -29,7 +29,10 @@ export default function SocketContextProvider({
   const { setLetter: setPuzzleLetter } = usePuzzleContext();
 
   useEffect(() => {
-    const socket = io({ autoConnect: true, transports: ["websocket"] });
+    const socket = io({
+      autoConnect: true,
+      withCredentials: true,
+    });
     socket.connect();
 
     socket.on("connect", () => {
