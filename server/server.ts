@@ -5,7 +5,7 @@ import { socketHandler } from "./socket-handlers";
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
-const port = 3000;
+const port = parseInt(process.env.PORT || '3000', 10);
 
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
@@ -22,6 +22,9 @@ app.prepare().then(() => {
       process.exit(1);
     })
     .listen(port, () => {
-      console.log(`> Ready on http://${hostname}:${port}`);
+      console.log(
+        `> Server listening at http://localhost:${port} as ${dev ? 'development' : process.env.NODE_ENV
+        }`
+      )
     });
 });
