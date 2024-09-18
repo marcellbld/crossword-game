@@ -9,7 +9,7 @@ export const socketHandler = (io: Server) => (socket: Socket) => {
     await leaveRoom(socket, room);
     socket.to(room).emit(SocketEvent.LEFT_ROOM, socket.id);
 
-    socket.leave(room);
+    await socket.leave(room);
   }
 
   socket.on("set-letter", async ({ position, letter }: SetLetterSocketData) => {
@@ -27,11 +27,11 @@ export const socketHandler = (io: Server) => (socket: Socket) => {
     console.log("JOIN ROOM", roomId);
     const initialRoomData = await joinToRoom(socket, roomId);
     socket.to(roomId).emit(SocketEvent.JOINED_ROOM, initialRoomData.players.find((p: PlayerData) => p.socketId === socket.id));
-    socket.join(roomId);
 
     console.log("SEND MESSAGE TO " + socket.id);
-
     socket.timeout(1000).emit(SocketEvent.ROOM_INITIALIZATION, initialRoomData as InitialRoomData);
+
+    await socket.join(roomId);
   });
 
   socket.on("leave-room", async (roomId: string) => {
