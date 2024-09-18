@@ -11,7 +11,6 @@ export default function FloatingText({
   const [lastRefreshText, setLastRefreshText] = useState("");
 
   const controls = useAnimation();
-  console.log(refreshText);
 
   useEffect(() => {
     if (refreshText && refreshText !== lastRefreshText) {

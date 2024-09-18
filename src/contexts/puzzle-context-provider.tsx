@@ -131,13 +131,13 @@ export default function PuzzleContextProvider({
         },
       }));
 
-      setTiles(prev =>
-        prev!.map((tile, index) =>
+      setTiles(prev => [
+        ...prev!.map((tile, index) =>
           index !== position
             ? tile
             : new TileModel({ type: TileType.Simple, content: [letter] })
-        )
-      );
+        ),
+      ]);
     }
   };
 
