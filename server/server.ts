@@ -12,7 +12,7 @@ const handler = app.getRequestHandler();
 
 app.prepare().then(() => {
   const httpServer = createServer(handler);
-  const io = new Server(httpServer, { /* options */ });
+  const io = new Server(httpServer, { allowEIO3: true /* options */ });
 
   io.on("connection", socketHandler(io));
 
