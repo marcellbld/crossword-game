@@ -12,7 +12,10 @@ const handler = app.getRequestHandler();
 
 app.prepare().then(() => {
   const httpServer = createServer(handler);
-  const io = new Server(httpServer, { allowEIO3: true /* options */ });
+  const io = new Server(httpServer, {
+    allowEIO3: true,
+    transports: ['websocket'] /* options */
+  });
 
   io.on("connection", socketHandler(io));
 
