@@ -28,7 +28,7 @@ export const socketHandler = (io: Server) => (socket: Socket) => {
     socket.to(roomId).emit(SocketEvent.JOINED_ROOM, initialRoomData.players.find((p: PlayerData) => p.socketId === socket.id));
     socket.join(roomId);
 
-    socket.emit(SocketEvent.ROOM_INITIALIZATION, initialRoomData as InitialRoomData);
+    socket.timeout(2000).emit(SocketEvent.ROOM_INITIALIZATION, initialRoomData as InitialRoomData);
   });
 
   socket.on("leave-room", async (roomId: string) => {
