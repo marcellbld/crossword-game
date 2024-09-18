@@ -83,6 +83,8 @@ export default function SocketContextProvider({
             addScore(socketId, score);
           }
         );
+      } else {
+        throw new Error("Failed to join room");
       }
     });
   };
