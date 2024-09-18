@@ -53,7 +53,7 @@ export default function LetterSelectPanel() {
           >
             <div
               className={cn(
-                "h-full flex justify-center items-center bg-white rounded-md shadow-box-simple text-question uppercase font-bold select-none cursor-none pointer-events-none text-3xl",
+                "h-full flex justify-center items-center bg-white rounded-md shadow-box-simple text-question uppercase font-bold select-none cursor-none pointer-events-none text-xl sm:text-2xl md:text-3xl",
                 selected && "bg-slate-50",
                 disabled && "opacity-50",
                 solved && "bg-green-500 text-black/80"
@@ -82,7 +82,7 @@ export default function LetterSelectPanel() {
     selectedTileId && !!letterOptions?.[selectedTileId];
 
   return (
-    <div className="w-full h-[4rem] md:h-[4.75rem] xl:h-[5rem] flex justify-center items-center my-2">
+    <div className="w-full h-[2rem] sm:h-[4rem] md:h-[4.75rem] xl:h-[5rem] flex justify-center items-center my-2">
       {!selectedLetterTile && <div>Select Tile</div>}
       {selectedLetterTile && createLetterTiles()}
     </div>

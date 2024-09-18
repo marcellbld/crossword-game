@@ -75,9 +75,9 @@ export default function StatusChangePanel() {
 
   return (
     <div className="w-full h-[2rem] flex justify-center">
-      <div className="h-full w-[75%] bg-white border-2 border-slate-700/80 rounded-full px-4">
+      <div className="h-full w-[75%] md:w-[50%] bg-white border-2 border-slate-700/80 rounded-full px-4">
         <div className="size-full flex items-center justify-center">
-          <div className="h-full flex-1 relative overflow-hidden text-muted-foreground">
+          <div className="h-full flex-1 relative flex justify-center items-center overflow-hidden text-muted-foreground">
             <motion.div
               className="absolute"
               animate={lastPointControls}
@@ -149,7 +149,7 @@ export default function StatusChangePanel() {
 
 function createPointChangeLine(pointChange: PointChange) {
   return (
-    <div>
+    <div className="text-xs sm:text-sm md:text-md lg:text-lg">
       <span className="font-semibold">{pointChange.socketId}&apos;s</span>{" "}
       points changed
       {createChangeValueSpan(pointChange.change)}
@@ -161,6 +161,6 @@ function createChangeValueSpan(change: number) {
   return change > 0 ? (
     <span className="font-semibold text-green-600"> +{change}</span>
   ) : (
-    <span className="font-semibold text-red-600"> {change}</span>
+    <span className="font-semibold text-red-600m"> {change}</span>
   );
 }
