@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "ts-node server/server.ts",
     "build": "next build",
-    "start": "NODE_ENV=production ts-node server/server.ts",
+    "start": "NODE_ENV=production ts-node -i server/server.ts",
     "lint": "next lint"
   },
   "prisma": {
