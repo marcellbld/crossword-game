@@ -52,43 +52,43 @@ export default function SocketContextProvider({
     };
   }, []);
 
-  const joinRoom = async (roomId: string) => {
+  const receiveInitialData = (socket: Socket, data: InitialRoomData) => {
+    setupInitials(data);
+    setPlayers(data.players || []);
+
+    socket.on(SocketEvent.JOINED_ROOM, data => {
+      addPlayer(data);
+    });
+    socket.on(SocketEvent.LEFT_ROOM, data => {
+      removePlayer(data);
+    });
+    socket.on(
+      SocketEvent.SET_LETTER,
+      ({
+        socketId,
+        position,
+        letter,
+        success,
+      }: SetLetterSocketCallbackData) => {
+        setPuzzleLetter({ socketId, position, letter, success });
+      }
+    );
+    socket.on(
+      SocketEvent.CHANGED_PLAYER_SCORE,
+      ({ socketId, score }: PlayerScoreChangedData) => {
+        addScore(socketId, score);
+      }
+    );
+  };
+
+  const joinRoom = (roomId: string) => {
     if (!socket) return;
 
-    try {
-      const data: InitialRoomData = await socket.emitWithAck(
-        "join-room",
-        roomId
-      );
-      setupInitials(data);
-      setPlayers(data.players || []);
+    socket.on(SocketEvent.ROOM_INITIALIZATION, (data: InitialRoomData) => {
+      receiveInitialData(socket, data);
+    });
 
-      socket.on(SocketEvent.JOINED_ROOM, data => {
-        addPlayer(data);
-      });
-      socket.on(SocketEvent.LEFT_ROOM, data => {
-        removePlayer(data);
-      });
-      socket.on(
-        SocketEvent.SET_LETTER,
-        ({
-          socketId,
-          position,
-          letter,
-          success,
-        }: SetLetterSocketCallbackData) => {
-          setPuzzleLetter({ socketId, position, letter, success });
-        }
-      );
-      socket.on(
-        SocketEvent.CHANGED_PLAYER_SCORE,
-        ({ socketId, score }: PlayerScoreChangedData) => {
-          addScore(socketId, score);
-        }
-      );
-    } catch (error) {
-      throw new Error("Failed to join room");
-    }
+    socket.emit("join-room", roomId);
   };
 
   const setLetter = ({ position, letter }: SetLetterSocketData) => {

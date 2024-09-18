@@ -23,12 +23,12 @@ export const socketHandler = (io: Server) => (socket: Socket) => {
     io.to(room).emit(SocketEvent.SET_LETTER, { socketId: socket.id, position, letter, success } as SetLetterSocketCallbackData);
   });
 
-  socket.on("join-room", async (roomId: string, callback) => {
+  socket.on("join-room", async (roomId: string) => {
     const initialRoomData = await joinToRoom(socket, roomId);
     socket.to(roomId).emit(SocketEvent.JOINED_ROOM, initialRoomData.players.find((p: PlayerData) => p.socketId === socket.id));
     socket.join(roomId);
 
-    callback(initialRoomData);
+    socket.emit(SocketEvent.ROOM_INITIALIZATION, initialRoomData as InitialRoomData);
   });
 
   socket.on("leave-room", async (roomId: string) => {
