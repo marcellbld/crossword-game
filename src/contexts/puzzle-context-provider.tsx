@@ -49,8 +49,8 @@ export default function PuzzleContextProvider({
     InitialRoomData,
     "basePuzzle" | "letterOptions" | "progressBoard"
   >): void => {
-    setLetterOptions(letterOptions);
-    setProgressBoard(progressBoard);
+    setLetterOptions(() => letterOptions);
+    setProgressBoard(() => progressBoard);
 
     const map = Array.from({ length: 64 }).map(
       () => new TileModel({ type: TileType.Simple })
@@ -88,7 +88,7 @@ export default function PuzzleContextProvider({
       });
     }
 
-    setTiles([...map]);
+    setTiles(() => [...map]);
   };
 
   const setLetter = ({
