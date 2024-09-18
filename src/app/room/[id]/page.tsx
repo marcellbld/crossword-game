@@ -5,11 +5,7 @@ import GameBoardResponsiveWrapper from "@/components/game-board-responsive-wrapp
 import LetterSelectPanel from "@/components/letter-select-panel";
 import PlayerInfoPanel from "@/components/player-info-panel";
 import StatusChangePanel from "@/components/status-change-panel";
-import {
-  usePuzzleContext,
-  useRoomContext,
-  useSocketContext,
-} from "@/lib/hooks/hooks";
+import { usePuzzleContext, useSocketContext } from "@/lib/hooks/hooks";
 import { useRoomId } from "@/lib/hooks/use-room-id";
 import { useEffect } from "react";
 
