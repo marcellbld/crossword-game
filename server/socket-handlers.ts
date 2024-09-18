@@ -26,8 +26,11 @@ export const socketHandler = (io: Server) => (socket: Socket) => {
   socket.on("join-room", async (roomId: string) => {
     console.log("JOIN ROOM", roomId);
     const initialRoomData = await joinToRoom(socket, roomId);
+
+    console.log("AFTER JOIN ROOM");
     socket.to(roomId).emit(SocketEvent.JOINED_ROOM, initialRoomData.players.find((p: PlayerData) => p.socketId === socket.id));
 
+    console.log("AFTER EMIT");
     console.log("SEND MESSAGE TO " + socket.id);
     socket.timeout(1000).emit(SocketEvent.ROOM_INITIALIZATION, initialRoomData as InitialRoomData);
 
