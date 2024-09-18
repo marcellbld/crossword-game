@@ -25,9 +25,6 @@ export default function RoomIdPage() {
     joinRoom(roomId);
   }, [id]);
 
-  console.log("render");
-  console.log(tiles);
-
   return (
     <div className="flex h-screen justify-center items-center">
       {!initialized && <div>Loading...</div>}
