@@ -29,8 +29,8 @@ export default function RoomIdPage() {
 
   return (
     <div className="flex h-screen justify-center items-center">
-      {!initialized && <div>Loading...</div>}
-      {initialized && (
+      {!initialized && !tiles && <div>Loading...</div>}
+      {(initialized || tiles) && (
         // <PuzzleContextProvider
         //   progressBoard={initialData.progressBoard}
         //   basePuzzle={initialData.basePuzzle}
