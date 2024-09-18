@@ -38,7 +38,7 @@ export default function RoomIdPage() {
           <div className="bg-[#F8E0C8] p-2 rounded-[3rem] flex flex-col gap-3">
             <PlayerInfoPanel />
             <div className="border-2 border-[#4b3a2b] bg-[#888786] rounded-lg shadow-md shadow-slate-700">
-              <GameBoard />
+              <GameBoard tiles={tiles!} />
             </div>
             <StatusChangePanel />
             <LetterSelectPanel />

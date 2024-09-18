@@ -6,21 +6,10 @@ import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
 import { calculateDirection } from "@/lib/game-utils";
 import { PlayerData, TileType } from "@/shared/types";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
 
-export default function GameBoard() {
-  const {
-    tiles: _tiles,
-    selectedTileId,
-    setSelectedTileId,
-    progressBoard,
-  } = usePuzzleContext();
-
-  const [tiles, setTiles] = useState<TileModel[] | null>(null);
-
-  useEffect(() => {
-    setTiles(_tiles);
-  }, [_tiles]);
+export default function GameBoard({ tiles }: { tiles: TileModel[] }) {
+  const { selectedTileId, setSelectedTileId, progressBoard } =
+    usePuzzleContext();
 
   console.log(tiles);
 
