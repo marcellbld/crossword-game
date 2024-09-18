@@ -117,7 +117,7 @@ function createQuestion(tileModel: TileModel, questionNumber: number = 0) {
   return (
     <div
       className="text-question uppercase font-bold leading-tight select-none cursor-none pointer-events-none
-       text-[0.3rem] sm:text-xs md:text-sm"
+       text-[0.475rem] sm:text-xs md:text-sm"
     >
       {questionType === QuestionType.Text && content}
       {questionType === QuestionType.Color && (
