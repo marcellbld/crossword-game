@@ -24,7 +24,12 @@ export default function RoomIdPage() {
   }, [tiles]);
 
   useEffect(() => {
-    joinRoom(roomId);
+    const callJoinRoom = async () => {
+      await joinRoom(roomId);
+    };
+    callJoinRoom().then(() => {
+      console.log("FROM CALLJOINROOM");
+    });
   }, [id]);
 
   return (
