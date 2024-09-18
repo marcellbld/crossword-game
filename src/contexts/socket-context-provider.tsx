@@ -47,6 +47,10 @@ export default function SocketContextProvider({
       setSocket(null);
     });
 
+    socket.on(SocketEvent.ROOM_INITIALIZATION, (data: InitialRoomData) => {
+      receiveInitialData(socket, data);
+    });
+
     return () => {
       socket.off("connect");
     };
@@ -83,10 +87,6 @@ export default function SocketContextProvider({
 
   const joinRoom = (roomId: string) => {
     if (!socket) return;
-
-    socket.on(SocketEvent.ROOM_INITIALIZATION, (data: InitialRoomData) => {
-      receiveInitialData(socket, data);
-    });
 
     socket.emit("join-room", roomId);
   };
