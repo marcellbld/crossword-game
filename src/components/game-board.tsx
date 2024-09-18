@@ -9,6 +9,8 @@ export default function GameBoard() {
   const { tiles, selectedTileId, setSelectedTileId, progressBoard } =
     usePuzzleContext();
 
+  console.log(tiles);
+
   const { players } = useRoomContext();
 
   let selectedTiles: number[] = [];

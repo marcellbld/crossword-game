@@ -18,12 +18,8 @@ export default function RoomIdPage() {
   const roomId = useRoomId();
 
   useEffect(() => {
-    setTimeout(() => {
-      setInitialized(true);
-    }, 500);
-    console.log("TILES CHANGED");
-    console.log(tiles);
-  }, [tiles, initialized]);
+    setInitialized(true);
+  }, [tiles]);
 
   useEffect(() => {
     joinRoom(roomId);
