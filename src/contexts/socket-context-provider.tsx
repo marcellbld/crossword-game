@@ -31,7 +31,11 @@ export default function SocketContextProvider({
   useEffect(() => {
     const socket = io({
       autoConnect: true,
-      transports: ["websocket", "polling"],
+      transports: ["websocket"],
+      reconnection: true,
+      reconnectionDelay: 10000,
+      reconnectionDelayMax: 60000,
+      timeout: 10000,
     });
     socket.connect();
 
