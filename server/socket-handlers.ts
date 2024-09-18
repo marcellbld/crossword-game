@@ -24,6 +24,7 @@ export const socketHandler = (io: Server) => (socket: Socket) => {
   });
 
   socket.on("join-room", async (roomId: string) => {
+    console.log("JOIN ROOM", roomId);
     const initialRoomData = await joinToRoom(socket, roomId);
     socket.to(roomId).emit(SocketEvent.JOINED_ROOM, initialRoomData.players.find((p: PlayerData) => p.socketId === socket.id));
     socket.join(roomId);

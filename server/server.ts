@@ -15,7 +15,6 @@ app.prepare().then(() => {
   const io = new Server(httpServer, {
     allowEIO3: true,
     transports: ['websocket'],
-    destroyUpgradeTimeout: 5000,
   });
 
   io.on("connection", socketHandler(io));
