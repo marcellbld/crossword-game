@@ -7,7 +7,7 @@ import PlayerInfoPanel from "@/components/player-info-panel";
 import StatusChangePanel from "@/components/status-change-panel";
 import { usePuzzleContext, useSocketContext } from "@/lib/hooks/hooks";
 import { useRoomId } from "@/lib/hooks/use-room-id";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function RoomIdPage() {
   const { joinRoom, id } = useSocketContext();
