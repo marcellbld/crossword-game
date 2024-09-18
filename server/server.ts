@@ -14,7 +14,7 @@ app.prepare().then(() => {
   const httpServer = createServer(handler);
   const io = new Server(httpServer, {
     allowEIO3: true,
-    transports: ['websocket'],
+    transports: ['websocket', "polling"],
   });
 
   io.on("connection", socketHandler(io));
