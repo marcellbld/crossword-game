@@ -18,7 +18,9 @@ export default function RoomIdPage() {
   const roomId = useRoomId();
 
   useEffect(() => {
-    setInitialized(true);
+    if (tiles) {
+      setInitialized(true);
+    }
   }, [tiles]);
 
   useEffect(() => {
