@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import SocketContextProvider from "@/contexts/socket-context-provider";
+import RoomContextProvider from "@/contexts/room-context-provider";
+import PuzzleContextProvider from "@/contexts/puzzle-context-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,9 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen bg-gradient-to-b from-[#69170B] to-[#802A19]`}
       >
-        {children}
+        <PuzzleContextProvider>
+          <RoomContextProvider>
+            <SocketContextProvider>{children}</SocketContextProvider>
+          </RoomContextProvider>
+        </PuzzleContextProvider>
       </body>
     </html>
   );

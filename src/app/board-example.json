@@ -1,0 +1,472 @@
+[
+  {
+    "id": 0,
+    "tiles": [
+      {
+        "position": 0,
+        "type": "empty"
+      },
+      {
+        "position": 2,
+        "type": "empty"
+      },
+      {
+        "position": 3,
+        "type": "empty"
+      },
+      {
+        "position": 5,
+        "type": "empty"
+      },
+      {
+        "position": 6,
+        "type": "empty"
+      },
+      {
+        "position": 7,
+        "type": "empty"
+      },
+      {
+        "position": 11,
+        "type": "empty"
+      },
+      {
+        "position": 13,
+        "type": "empty"
+      },
+      {
+        "position": 14,
+        "type": "empty"
+      },
+      {
+        "position": 15,
+        "type": "empty"
+      },
+      {
+        "position": 16,
+        "type": "empty"
+      },
+      {
+        "position": 18,
+        "type": "empty"
+      },
+      {
+        "position": 19,
+        "type": "empty"
+      },
+      {
+        "position": 21,
+        "type": "empty"
+      },
+      {
+        "position": 22,
+        "type": "empty"
+      },
+      {
+        "position": 23,
+        "type": "empty"
+      },
+      {
+        "position": 29,
+        "type": "empty"
+      },
+      {
+        "position": 30,
+        "type": "empty"
+      },
+      {
+        "position": 31,
+        "type": "empty"
+      },
+      {
+        "position": 32,
+        "type": "empty"
+      },
+      {
+        "position": 34,
+        "type": "empty"
+      },
+      {
+        "position": 35,
+        "type": "empty"
+      },
+      {
+        "position": 37,
+        "type": "empty"
+      },
+      {
+        "position": 38,
+        "type": "empty"
+      },
+      {
+        "position": 39,
+        "type": "empty"
+      },
+      {
+        "position": 40,
+        "type": "empty"
+      },
+      {
+        "position": 41,
+        "type": "empty"
+      },
+      {
+        "position": 42,
+        "type": "empty"
+      },
+      {
+        "position": 43,
+        "type": "empty"
+      },
+      {
+        "position": 45,
+        "type": "empty"
+      },
+      {
+        "position": 46,
+        "type": "empty"
+      },
+      {
+        "position": 47,
+        "type": "empty"
+      },
+      {
+        "position": 48,
+        "type": "empty"
+      },
+      {
+        "position": 49,
+        "type": "empty"
+      },
+      {
+        "position": 50,
+        "type": "empty"
+      },
+      {
+        "position": 51,
+        "type": "empty"
+      },
+      {
+        "position": 52,
+        "type": "empty"
+      },
+      {
+        "position": 53,
+        "type": "empty"
+      },
+      {
+        "position": 54,
+        "type": "empty"
+      },
+      {
+        "position": 55,
+        "type": "empty"
+      },
+      {
+        "position": 56,
+        "type": "empty"
+      },
+      {
+        "position": 57,
+        "type": "empty"
+      },
+      {
+        "position": 58,
+        "type": "empty"
+      },
+      {
+        "position": 59,
+        "type": "empty"
+      },
+      {
+        "position": 60,
+        "type": "empty"
+      },
+      {
+        "position": 61,
+        "type": "empty"
+      },
+      {
+        "position": 62,
+        "type": "empty"
+      },
+      {
+        "position": 63,
+        "type": "empty"
+      },
+      {
+        "position": 1,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "bottom",
+            "baseQuestion": 0
+          }
+        ]
+      },
+      {
+        "position": 4,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "bottom",
+            "baseQuestion": 2
+          }
+        ]
+      },
+      {
+        "position": 8,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "right",
+            "baseQuestion": 1
+          }
+        ]
+      },
+      {
+        "position": 24,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "right",
+            "baseQuestion": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "tiles": [
+      {
+        "position": 0,
+        "type": "empty"
+      },
+      {
+        "position": 2,
+        "type": "empty"
+      },
+      {
+        "position": 4,
+        "type": "empty"
+      },
+      {
+        "position": 5,
+        "type": "empty"
+      },
+      {
+        "position": 6,
+        "type": "empty"
+      },
+      {
+        "position": 7,
+        "type": "empty"
+      },
+      {
+        "position": 8,
+        "type": "empty"
+      },
+      {
+        "position": 10,
+        "type": "empty"
+      },
+      {
+        "position": 21,
+        "type": "empty"
+      },
+      {
+        "position": 22,
+        "type": "empty"
+      },
+      {
+        "position": 23,
+        "type": "empty"
+      },
+      {
+        "position": 25,
+        "type": "empty"
+      },
+      {
+        "position": 29,
+        "type": "empty"
+      },
+      {
+        "position": 30,
+        "type": "empty"
+      },
+      {
+        "position": 31,
+        "type": "empty"
+      },
+      {
+        "position": 37,
+        "type": "empty"
+      },
+      {
+        "position": 38,
+        "type": "empty"
+      },
+      {
+        "position": 39,
+        "type": "empty"
+      },
+      {
+        "position": 41,
+        "type": "empty"
+      },
+      {
+        "position": 42,
+        "type": "empty"
+      },
+      {
+        "position": 43,
+        "type": "empty"
+      },
+      {
+        "position": 44,
+        "type": "empty"
+      },
+      {
+        "position": 45,
+        "type": "empty"
+      },
+      {
+        "position": 46,
+        "type": "empty"
+      },
+      {
+        "position": 47,
+        "type": "empty"
+      },
+      {
+        "position": 49,
+        "type": "empty"
+      },
+      {
+        "position": 50,
+        "type": "empty"
+      },
+      {
+        "position": 51,
+        "type": "empty"
+      },
+      {
+        "position": 52,
+        "type": "empty"
+      },
+      {
+        "position": 53,
+        "type": "empty"
+      },
+      {
+        "position": 54,
+        "type": "empty"
+      },
+      {
+        "position": 55,
+        "type": "empty"
+      },
+      {
+        "position": 56,
+        "type": "empty"
+      },
+      {
+        "position": 57,
+        "type": "empty"
+      },
+      {
+        "position": 58,
+        "type": "empty"
+      },
+      {
+        "position": 59,
+        "type": "empty"
+      },
+      {
+        "position": 60,
+        "type": "empty"
+      },
+      {
+        "position": 61,
+        "type": "empty"
+      },
+      {
+        "position": 62,
+        "type": "empty"
+      },
+      {
+        "position": 63,
+        "type": "empty"
+      },
+      {
+        "position": 1,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "bottom",
+            "baseQuestion": 11
+          }
+        ]
+      },
+      {
+        "position": 3,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "bottom",
+            "baseQuestion": 10
+          }
+        ]
+      },
+      {
+        "position": 12,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "right",
+            "baseQuestion": 8
+          },
+          {
+            "direction": "bottom",
+            "baseQuestion": 9
+          }
+        ]
+      },
+      {
+        "position": 16,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "right",
+            "baseQuestion": 4
+          },
+          {
+            "direction": "bottom",
+            "baseQuestion": 5
+          }
+        ]
+      },
+      {
+        "position": 26,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "right",
+            "baseQuestion": 6
+          }
+        ]
+      },
+      {
+        "position": 33,
+        "type": "question",
+        "questions": [
+          {
+            "direction": "right",
+            "baseQuestion": 7
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": 0,
+    "type": "text",
+    "content": "Nem fiatal",
+    "answer": "Öreg"
+  },
+  {
+    "id": 1,
+    "type": "text",
+    "content": "Római V",
+    "answer": "Öt"
+  },
+  {
+    "id": 2,
+    "type": "color",
+    "content": "red",
+    "answer": "Piros"
+  },
+  {
+    "id": 3,
+    "type": "emoji",
+    "content": "mouse2",
+    "answer": "Egér"
+  },
+  {
+    "id": 4,
+    "type": "color",
+    "content": "green",
+    "answer": "Zöld"
+  },
+  {
+    "id": 5,
+    "type": "text",
+    "content": "Sivatag hajója",
+    "answer": "Teve"
+  },
+  {
+    "id": 6,
+    "type": "text",
+    "content": "Tegnap holnapja",
+    "answer": "Ma"
+  },
+  {
+    "id": 7,
+    "type": "emoji",
+    "content": "fish",
+    "answer": "Hal"
+  },
+  {
+    "id": 8,
+    "type": "text",
+    "content": "H2O",
+    "answer": "Víz"
+  },
+  {
+    "id": 9,
+    "type": "text",
+    "content": "Ének",
+    "answer": "Dal"
+  },
+  {
+    "id": 10,
+    "type": "emoji",
+    "content": "apple",
+    "answer": "Alma"
+  },
+  {
+    "id": 11,
+    "type": "text",
+    "content": "Nem ez",
+    "answer": "Az"
+  }
+]
