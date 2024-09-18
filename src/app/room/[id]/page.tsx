@@ -7,14 +7,23 @@ import PlayerInfoPanel from "@/components/player-info-panel";
 import StatusChangePanel from "@/components/status-change-panel";
 import { usePuzzleContext, useSocketContext } from "@/lib/hooks/hooks";
 import { useRoomId } from "@/lib/hooks/use-room-id";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function RoomIdPage() {
   const { joinRoom, id } = useSocketContext();
-  const { tiles, letterOptions, progressBoard } = usePuzzleContext();
+  const { tiles } = usePuzzleContext();
   // const [initialData, setInitialData] = useState<InitialRoomData | null>(null);
+  const [initialized, setInitialized] = useState(false);
 
   const roomId = useRoomId();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setInitialized(true);
+    }, 500);
+    console.log("TILES CHANGED");
+    console.log(tiles);
+  }, [tiles, initialized]);
 
   useEffect(() => {
     joinRoom(roomId);
@@ -22,8 +31,8 @@ export default function RoomIdPage() {
 
   return (
     <div className="flex h-screen justify-center items-center">
-      {!letterOptions && !tiles && !progressBoard && <div>Loading...</div>}
-      {(letterOptions || tiles || progressBoard) && (
+      {!tiles && <div>Loading...</div>}
+      {tiles && (
         // <PuzzleContextProvider
         //   progressBoard={initialData.progressBoard}
         //   basePuzzle={initialData.basePuzzle}
