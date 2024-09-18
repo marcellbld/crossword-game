@@ -88,7 +88,7 @@ export default function PuzzleContextProvider({
       });
     }
 
-    setTiles(map);
+    setTiles([...map]);
   };
 
   const setLetter = ({

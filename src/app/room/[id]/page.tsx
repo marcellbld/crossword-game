@@ -19,7 +19,10 @@ export default function RoomIdPage() {
 
   useEffect(() => {
     if (tiles != null) {
-      setInitialized(true);
+      setTimeout(() => {
+        setInitialized(true);
+        console.log("initialized");
+      }, 1000);
     }
   }, [tiles]);
 
