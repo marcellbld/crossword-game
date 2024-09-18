@@ -31,7 +31,7 @@ export default function SocketContextProvider({
   useEffect(() => {
     const socket = io({
       autoConnect: true,
-      withCredentials: true,
+      transports: ["websocket"],
     });
     socket.connect();
 

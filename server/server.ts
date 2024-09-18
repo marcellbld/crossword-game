@@ -14,11 +14,7 @@ app.prepare().then(() => {
   const httpServer = createServer(handler);
   const io = new Server(httpServer, {
     allowEIO3: true,
-    cors: {
-      origin: "https://seal-app-vhny2.ondigitalocean.app",
-      methods: ["GET", "POST"],
-      credentials: true
-    }
+    transports: ['websocket'],
   });
 
   io.on("connection", socketHandler(io));
