@@ -11,20 +11,10 @@ import { useEffect, useState } from "react";
 
 export default function RoomIdPage() {
   const { joinRoom, id } = useSocketContext();
-  const { tiles } = usePuzzleContext();
+  const { tiles, letterOptions, progressBoard } = usePuzzleContext();
   // const [initialData, setInitialData] = useState<InitialRoomData | null>(null);
-  const [initialized, setInitialized] = useState(false);
 
   const roomId = useRoomId();
-
-  useEffect(() => {
-    if (tiles != null) {
-      setTimeout(() => {
-        setInitialized(true);
-        console.log("initialized");
-      }, 1000);
-    }
-  }, [tiles]);
 
   useEffect(() => {
     joinRoom(roomId);
@@ -32,8 +22,8 @@ export default function RoomIdPage() {
 
   return (
     <div className="flex h-screen justify-center items-center">
-      {!initialized && <div>Loading...</div>}
-      {initialized && (
+      {!letterOptions && !tiles && !progressBoard && <div>Loading...</div>}
+      {(letterOptions || tiles || progressBoard) && (
         // <PuzzleContextProvider
         //   progressBoard={initialData.progressBoard}
         //   basePuzzle={initialData.basePuzzle}
