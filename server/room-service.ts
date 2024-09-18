@@ -50,12 +50,15 @@ export const joinToRoom = async (socket: Socket, roomId: string): Promise<Initia
   const room = await getRoom(roomId);
   console.log("INSIDE JOIN ROOM 2");
 
-  if (room === null) throw new Error("Room not found");
+  console.log(room);
+  console.log(room === null);
+
+  if (!room) throw new Error("Room not found");
   console.log("INSIDE JOIN ROOM 3");
 
   const puzzle = await getPuzzle(room.puzzleId);
   console.log("INSIDE JOIN ROOM 4");
-  if (puzzle === null) throw new Error("Puzzle not found");
+  if (!puzzle) throw new Error("Puzzle not found");
   console.log("INSIDE JOIN ROOM 5");
 
   const playerData: PlayerData = {
