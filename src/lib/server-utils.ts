@@ -1,5 +1,6 @@
-// "server-only"
+"server-only"
 
+import { Room } from "@prisma/client";
 import prisma from "./db";
 import { Puzzle } from "./types/puzzle-types";
 
@@ -15,7 +16,7 @@ export async function getRandomPuzzle() {
   return puzzle;
 }
 
-export async function createRoom(puzzleId: number) {
+export async function createRoom(puzzleId: number): Promise<Room> {
   console.log("CREATE ROOM FUNC 1");
   const room = await prisma.room.create({
     data: {
@@ -35,10 +36,10 @@ export async function deleteRoom(id: string) {
   return room;
 }
 
-export async function getRoom(roomId: string) {
+export async function getRoom(roomId: string): Promise<Room | null> {
   console.log("GET ROOM FUNC");
   console.log(roomId);
-  const room = await prisma.room.findFirst({
+  const room = await prisma.room.findUnique({
     where: {
       id: roomId
     }
