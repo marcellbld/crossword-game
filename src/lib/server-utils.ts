@@ -37,7 +37,7 @@ export async function deleteRoom(id: string) {
 export async function getRoom(roomId: string) {
   console.log("GET ROOM FUNC");
   console.log(roomId);
-  const room = await prisma.room.findFirstOrThrow({
+  const room = await prisma.room.findFirst({
     where: {
       id: roomId
     }
