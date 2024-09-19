@@ -24,6 +24,7 @@ export async function createRoom(puzzleId: number) {
   });
 
   console.log("CREATE ROOM FUNC 2");
+  console.log(room);
   return room;
 }
 
