@@ -39,8 +39,7 @@ export async function deleteRoom(id: string) {
 export async function getRoom(roomId: string): Promise<Room | null> {
   console.log("GET ROOM FUNC");
   console.log(roomId);
-  console.log(prisma);
-  console.log(prisma.room);
+  console.log(await prisma.room.findMany());
   const room = await prisma.room.findUnique({
     where: {
       id: roomId
