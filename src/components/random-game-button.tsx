@@ -9,7 +9,7 @@ export default function RandomGameButton() {
   const handleClick = async () => {
     setPending(true);
 
-    await createRandomGame().finally(() => {
+    await createRandomGame().catch(() => {
       setPending(false);
     });
   };

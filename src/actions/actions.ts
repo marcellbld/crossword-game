@@ -1,15 +1,14 @@
 "use server";
 
 import { createRoom } from "@/lib/server-utils";
-import { Room } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export async function createRandomGame() {
-  let room: Room;
   try {
-    room = await createRoom(1);
+    await createRoom(1).then((room) => {
+      redirect(`/room/${room.id}`);
+    });
 
-    redirect(`/room/${room.id}`);
   } catch (e) {
     return {
       message: "Could not create room."
