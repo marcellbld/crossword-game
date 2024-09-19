@@ -16,12 +16,14 @@ export async function getRandomPuzzle() {
 }
 
 export async function createRoom(puzzleId: number) {
+  console.log("CREATE ROOM FUNC 1");
   const room = await prisma.room.create({
     data: {
       puzzleId
     }
   });
 
+  console.log("CREATE ROOM FUNC 2");
   return room;
 }
 
