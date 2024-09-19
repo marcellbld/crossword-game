@@ -2,16 +2,25 @@ import { Loader } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { createRandomGame } from "@/actions/actions";
+import { useRouter } from "next/navigation";
+import { Room } from "@prisma/client";
 
 export default function RandomGameButton() {
   const [pending, setPending] = useState(false);
+  const router = useRouter();
 
   const handleClick = async () => {
     setPending(true);
 
-    await createRandomGame().catch(() => {
-      setPending(false);
-    });
+    await createRandomGame()
+      .then((room: Room | undefined) => {
+        if (room) {
+          router.push(`/room/${room.id}`);
+        }
+      })
+      .catch(() => {
+        setPending(false);
+      });
   };
 
   return (

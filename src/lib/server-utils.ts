@@ -1,4 +1,4 @@
-"server-only"
+// "server-only"
 
 import prisma from "./db";
 import { Puzzle } from "./types/puzzle-types";
@@ -27,12 +27,23 @@ export async function createRoom(puzzleId: number) {
   return room;
 }
 
+export async function deleteRoom(id: string) {
+  const room = await prisma.room.delete({ where: { id } });
+
+  console.log("DELETE ROOM FUNC");
+  return room;
+}
+
 export async function getRoom(roomId: string) {
-  const room = await prisma.room.findUnique({
+  console.log("GET ROOM FUNC");
+  console.log(roomId);
+  const room = await prisma.room.findFirstOrThrow({
     where: {
       id: roomId
     }
   });
+  console.log("GET ROOM FUNC 2");
+  console.log(room);
 
   return room;
 }

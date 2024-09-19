@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io';
 import { InitialRoomData, PlayerData, RoomData, LetterOption, PLAYER_COLORS } from "../src/shared/types";
-import { getPuzzle, getRoom } from "../src/lib/server-utils";
+import { deleteRoom, getPuzzle, getRoom } from "../src/lib/server-utils";
 import { calculateLetterOptions, calculatePuzzle } from './puzzle-utils';
 import { Puzzle } from '@/lib/types/puzzle-types';
 
@@ -105,12 +105,14 @@ export const joinToRoom = async (socket: Socket, roomId: string): Promise<Initia
 };
 
 export const leaveRoom = async (socket: Socket, roomId: string) => {
-  const room = await getRoom(roomId);
-  if (room === null || !rooms.has(roomId)) throw new Error("Room not found");
+  if (!rooms.has(roomId)) throw new Error("Room not found");
 
   rooms.get(roomId)!.players = rooms.get(roomId)!.players.filter(p => p.socketId !== socket.id);
 
   if (rooms.get(roomId)!.players.length === 0) rooms.delete(roomId);
+
+  await deleteRoom(roomId);
+
 };
 
 export const getActiveRoom = (socket: Socket): string | undefined => {
