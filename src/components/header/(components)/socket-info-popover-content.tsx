@@ -4,7 +4,7 @@ import { useSocketContext } from "@/lib/hooks/hooks";
 import { useRoomId } from "@/lib/hooks/use-room-id";
 import { Separator } from "@radix-ui/react-separator";
 import { ZapIcon, Edit, Save, XIcon } from "lucide-react";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 export default function SocketInfoPopoverContent() {
   const { name, setName } = useSocketContext();
@@ -13,7 +13,7 @@ export default function SocketInfoPopoverContent() {
   const [editName, setEditName] = useState(false);
   const [inputName, setInputName] = useState<string>(name ?? "");
 
-  const handleSave = (e: any) => {
+  const handleSave = (e: FormEvent) => {
     e.preventDefault();
 
     if (inputName.trim() === "") return;
