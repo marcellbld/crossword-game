@@ -17,7 +17,7 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
 
     const leaveSocketRoom = async (room: string) => {
       await leaveRoom(socket, room);
-      socket.to(room).emit('leftRoom', socket.id);
+      socket.to(room).emit('leftRoom', socket.data.userId);
       await socket.leave(room);
     }
 

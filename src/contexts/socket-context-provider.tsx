@@ -80,14 +80,14 @@ export default function SocketContextProvider({
     socket.on("joinedRoom", playerData => {
       addPlayer(playerData);
     });
-    socket.on("leftRoom", socketId => {
-      removePlayer(socketId);
+    socket.on("leftRoom", userId => {
+      removePlayer(userId);
     });
-    socket.on("setLetter", (socketId, position, letter, success) => {
-      setPuzzleLetter(socketId, position, letter, success);
+    socket.on("setLetter", (userId, position, letter, success) => {
+      setPuzzleLetter(userId, position, letter, success);
     });
-    socket.on("changedPlayerScore", (socketId, score) => {
-      addScore(socketId, score);
+    socket.on("changedPlayerScore", (userId, score) => {
+      addScore(userId, score);
     });
   };
 

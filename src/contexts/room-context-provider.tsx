@@ -7,8 +7,8 @@ type TRoomContext = {
   players: PlayerData[];
   setPlayers: (players: PlayerData[]) => void;
   addPlayer: (player: PlayerData) => void;
-  removePlayer: (socketId: string) => void;
-  addScore: (socketId: string, score: number) => void;
+  removePlayer: (userId: string) => void;
+  addScore: (userId: string, score: number) => void;
 };
 
 export const RoomContext = createContext<TRoomContext | null>(null);
@@ -24,14 +24,14 @@ export default function RoomContextProvider({
     setPlayers(prev => [...prev, player]);
   };
 
-  const removePlayer = (socketId: string) => {
-    setPlayers(prev => prev.filter(player => player.socketId !== socketId));
+  const removePlayer = (userId: string) => {
+    setPlayers(prev => prev.filter(player => player.userId !== userId));
   };
 
-  const addScore = (socketId: string, score: number) => {
+  const addScore = (userId: string, score: number) => {
     setPlayers(prev =>
       prev.map(player => {
-        if (player.socketId === socketId) {
+        if (player.userId === userId) {
           return { ...player, score: score };
         }
         return player;

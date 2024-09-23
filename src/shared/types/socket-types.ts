@@ -6,9 +6,9 @@ import { Room } from "@prisma/client";
 export type ServerToClientEvents = {
   session: (data: SocketData) => void;
   joinedRoom: (socket: PlayerData) => void;
-  leftRoom: (socketId: _ServerSocket["id"]) => void;
-  setLetter: (socketId: _ServerSocket["id"], position: number, letter: string, success: boolean) => void;
-  changedPlayerScore: (socketId: _ServerSocket["id"], score: number) => void;
+  leftRoom: (userId: string) => void;
+  setLetter: (userId: string, position: number, letter: string, success: boolean) => void;
+  changedPlayerScore: (userId: string, score: number) => void;
 }
 
 export type ClientToServerEvents = {
