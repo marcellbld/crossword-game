@@ -1,17 +1,24 @@
 "use client";
 
+import { calculateDirection } from "@/lib/game-utils";
 import { TileModel } from "@/lib/models/tile-model";
 import { TileType } from "@/shared/types";
-import { InitialRoomData, SetLetterSocketCallbackData } from "@/shared/types";
+import { InitialRoomData } from "@/shared/types";
 import { createContext, useState } from "react";
 
 type TPuzzleContext = {
   tiles: TileModel[] | null;
   letterOptions: InitialRoomData["letterOptions"] | null;
   progressBoard: InitialRoomData["progressBoard"] | null;
-  selectedTileId: number | null;
-  setSelectedTileId: (id: number | null) => void;
-  setLetter: (data: SetLetterSocketCallbackData) => void;
+  selectedTileId: number[] | null;
+  setSelectedTileId: (id: number[] | null) => void;
+  getSelectedTiles: () => number[];
+  setLetter: (
+    socketId: string,
+    position: number,
+    letter: string,
+    success: boolean
+  ) => void;
   setupInitials: (
     data: Pick<
       InitialRoomData,
@@ -39,7 +46,33 @@ export default function PuzzleContextProvider({
   const [tiles, setTiles] = useState<TileModel[] | null>(null);
   // setupInitials(initialData.basePuzzle, initialData.progressBoard)
 
-  const [selectedTileId, setSelectedTileId] = useState<number | null>(null);
+  const [selectedTileId, setSelectedTileId] = useState<number[] | null>(null);
+
+  const getSelectedTiles = () => {
+    let selectedTiles: number[] = [];
+    if (selectedTileId !== null && tiles != null) {
+      const tile = tiles[selectedTileId[0]];
+      if (tile.type !== TileType.Empty) {
+        selectedTiles = [selectedTileId[0]];
+
+        if (tile.type === TileType.Question) {
+          const dir = calculateDirection(tile.direction![selectedTileId[1]]);
+
+          let nextId = selectedTileId[0] + dir;
+          while (
+            nextId >= 0 &&
+            nextId < tiles.length &&
+            tiles[nextId].type === TileType.Simple
+          ) {
+            selectedTiles.push(nextId);
+            nextId += dir;
+          }
+        }
+      }
+    }
+
+    return selectedTiles;
+  };
 
   const setupInitials = ({
     basePuzzle,
@@ -91,12 +124,12 @@ export default function PuzzleContextProvider({
     setTiles(() => [...map]);
   };
 
-  const setLetter = ({
-    socketId,
-    position,
-    letter,
-    success,
-  }: SetLetterSocketCallbackData) => {
+  const setLetter = (
+    socketId: string,
+    position: number,
+    letter: string,
+    success: boolean
+  ) => {
     setLetterOptions(prev => ({
       ...prev,
       [position]: [
@@ -105,22 +138,6 @@ export default function PuzzleContextProvider({
         ),
       ],
     }));
-    // setLetterOptions(prev =>
-    //   Object.fromEntries(
-    //     Object.entries(prev!).map(([key, value]) => {
-    //       const numKey = Number(key);
-    //       if (numKey === position) {
-    //         return [
-    //           numKey,
-    //           value.map(o =>
-    //             o.letter === letter ? { letter, selected: true } : o
-    //           ),
-    //         ];
-    //       }
-    //       return [numKey, value];
-    //     })
-    //   )
-    // );
 
     if (success) {
       setProgressBoard(prev => ({
@@ -148,6 +165,7 @@ export default function PuzzleContextProvider({
         progressBoard,
         selectedTileId,
         setSelectedTileId,
+        getSelectedTiles,
         letterOptions,
         setLetter,
         setupInitials,

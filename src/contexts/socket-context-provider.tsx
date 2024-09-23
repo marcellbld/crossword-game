@@ -1,20 +1,20 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
 import {
   InitialRoomData,
-  PlayerScoreChangedData,
-  SetLetterSocketCallbackData,
-  SetLetterSocketData,
-  SocketEvent,
+  ClientSocket as Socket,
+  SocketData,
 } from "../shared/types";
 import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
 
 type TSocketContext = {
   id: string | null;
+  name: string | null;
   joinRoom: (roomId: string) => void;
-  setLetter: (data: SetLetterSocketData) => void;
+  setLetter: (position: number, letter: string) => void;
+  setName: (name: string) => void;
 };
 
 export const SocketContext = createContext<TSocketContext | null>(null);
@@ -25,14 +25,21 @@ export default function SocketContextProvider({
   children: React.ReactNode;
 }) {
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [socketData, setSocketData] = useState<SocketData | null>(null);
   const { addPlayer, removePlayer, addScore, setPlayers } = useRoomContext();
   const { setLetter: setPuzzleLetter, setupInitials } = usePuzzleContext();
 
   useEffect(() => {
-    const socket = io({
+    const socket: Socket = io({
       autoConnect: false,
       transports: ["websocket"],
     });
+
+    const sessionId = localStorage.getItem("sessionId");
+    if (sessionId) {
+      socket.auth = { sessionId };
+    }
+
     socket.connect();
 
     socket.on("connect", () => {
@@ -42,17 +49,27 @@ export default function SocketContextProvider({
       setSocket(socket);
     });
 
+    socket.on("session", data => {
+      socket.auth = { sessionId: data.sessionId };
+
+      localStorage.setItem("sessionId", data.sessionId);
+
+      setSocketData(data);
+    });
+
     socket.on("disconnect", () => {
       console.log("DISCONNECTED");
       setSocket(null);
     });
 
-    socket.on(SocketEvent.ROOM_INITIALIZATION, (data: InitialRoomData) => {
-      receiveInitialData(socket, data);
-    });
-
     return () => {
       socket.off("connect");
+      socket.off("session");
+      socket.off("disconnect");
+      socket.off("joinedRoom");
+      socket.off("leftRoom");
+      socket.off("changedPlayerScore");
+      socket.off("setLetter");
     };
   }, []);
 
@@ -60,44 +77,45 @@ export default function SocketContextProvider({
     setupInitials(data);
     setPlayers(data.players || []);
 
-    socket.on(SocketEvent.JOINED_ROOM, data => {
-      addPlayer(data);
+    socket.on("joinedRoom", playerData => {
+      addPlayer(playerData);
     });
-    socket.on(SocketEvent.LEFT_ROOM, data => {
-      removePlayer(data);
+    socket.on("leftRoom", socketId => {
+      removePlayer(socketId);
     });
-    socket.on(
-      SocketEvent.SET_LETTER,
-      ({
-        socketId,
-        position,
-        letter,
-        success,
-      }: SetLetterSocketCallbackData) => {
-        setPuzzleLetter({ socketId, position, letter, success });
-      }
-    );
-    socket.on(
-      SocketEvent.CHANGED_PLAYER_SCORE,
-      ({ socketId, score }: PlayerScoreChangedData) => {
-        addScore(socketId, score);
-      }
-    );
+    socket.on("setLetter", (socketId, position, letter, success) => {
+      setPuzzleLetter(socketId, position, letter, success);
+    });
+    socket.on("changedPlayerScore", (socketId, score) => {
+      addScore(socketId, score);
+    });
   };
 
   const joinRoom = (roomId: string) => {
     if (!socket) return;
 
-    socket.emit("join-room", roomId);
+    socket.emit("joinRoom", roomId, (data: InitialRoomData) => {
+      receiveInitialData(socket, data);
+    });
   };
 
-  const setLetter = ({ position, letter }: SetLetterSocketData) => {
-    socket?.emit(SocketEvent.SET_LETTER, { position, letter });
+  const setLetter = (position: number, letter: string) => {
+    socket?.emit("setLetter", position, letter);
+  };
+
+  const setName = (name: string) => {
+    socket?.emit("setName", name);
   };
 
   return (
     <SocketContext.Provider
-      value={{ id: socket?.id || null, joinRoom, setLetter }}
+      value={{
+        id: socket?.id ?? null,
+        name: socketData?.name ?? null,
+        joinRoom,
+        setLetter,
+        setName,
+      }}
     >
       {children}
     </SocketContext.Provider>

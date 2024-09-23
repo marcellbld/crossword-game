@@ -17,36 +17,27 @@ export async function getRandomPuzzle() {
 }
 
 export async function createRoom(puzzleId: number): Promise<Room> {
-  console.log("CREATE ROOM FUNC 1");
   const room = await prisma.room.create({
     data: {
       puzzleId
     }
   });
 
-  console.log("CREATE ROOM FUNC 2");
-  console.log(room);
   return room;
 }
 
 export async function deleteRoom(id: string) {
   const room = await prisma.room.delete({ where: { id } });
 
-  console.log("DELETE ROOM FUNC");
   return room;
 }
 
 export async function getRoom(roomId: string): Promise<Room | null> {
-  console.log("GET ROOM FUNC");
-  console.log(roomId);
-  console.log(await prisma.room.findMany());
   const room = await prisma.room.findUnique({
     where: {
       id: roomId
     }
   });
-  console.log("GET ROOM FUNC 2");
-  console.log(room);
 
   return room;
 }

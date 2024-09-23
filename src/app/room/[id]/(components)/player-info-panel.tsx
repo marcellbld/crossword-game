@@ -1,7 +1,7 @@
 import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
 import React, { useEffect, useState } from "react";
 import { BsCircleFill, BsPersonFill } from "react-icons/bs";
-import FloatingText from "./floating-text";
+import FloatingText from "@/components/floating-text";
 
 type PointChange = {
   id: string;
@@ -26,7 +26,7 @@ export default function PlayerInfoPanel() {
 
       if (player.score !== playerCopy.score) {
         newPointsChanged.push({
-          id: player.socketId,
+          id: player.userId,
           change: player.score - playerCopy.score,
           refreshText: Math.random().toString(),
         } as PointChange);
@@ -46,12 +46,12 @@ export default function PlayerInfoPanel() {
     <div className="h-[2rem] sm:h-[4rem] md:h-[4.75rem] xl:h-[5rem] flex flex-row justify-center items-center gap-2">
       {playersCopy.map(player => {
         const changedPoint: number | undefined = pointChanges.find(
-          p => p.id === player.socketId
+          p => p.id === player.userId
         )?.change;
 
         return (
           <div
-            key={player.socketId}
+            key={player.userId}
             className="h-full flex flex-row items-center"
           >
             <div className="size-full aspect-square bg-white p-1 rounded-full shadow-sm shadow-black flex justify-center items-center z-10">
@@ -66,7 +66,7 @@ export default function PlayerInfoPanel() {
              text-xs sm:text-sm md:text-lg lg:text-xl xl:text-xl"
             >
               <div className="uppercase w-[5ch] font-semibold">
-                {player.socketId.substring(0, 5)}
+                {player.name}
               </div>
               <div className="size-[1.3rem] sm:size-[2.1rem] md:size-[2.7rem] xl:size-[3.2rem] aspect-square bg-amber-400 p-1 rounded-full shadow-sm shadow-black/40 flex justify-center items-center">
                 <div className="font-bold text-white text-[0.7rem] sm:text-sm md:text-lg lg:text-xl xl:text-xl">
@@ -74,8 +74,8 @@ export default function PlayerInfoPanel() {
                 </div>
                 <FloatingText
                   refreshText={
-                    pointChanges.find(p => p.id === player.socketId)
-                      ? pointChanges.find(p => p.id === player.socketId)
+                    pointChanges.find(p => p.id === player.userId)
+                      ? pointChanges.find(p => p.id === player.userId)
                           ?.refreshText
                       : null
                   }

@@ -11,11 +11,11 @@ export default function LetterSelectPanel() {
   const createLetterTiles = () => {
     if (!letterOptions || !selectedTileId || !progressBoard) return null;
 
-    const letters = letterOptions[selectedTileId];
-    const tileLetter = progressBoard?.[selectedTileId];
+    const letters = letterOptions[selectedTileId[0]];
+    const tileLetter = progressBoard?.[selectedTileId[0]];
 
     const handleClickOnTile = (letter: string) => {
-      setLetter({ position: selectedTileId!, letter });
+      setLetter(selectedTileId[0]!, letter);
     };
 
     const createLetterTile = (
@@ -79,10 +79,10 @@ export default function LetterSelectPanel() {
   };
 
   const selectedLetterTile =
-    selectedTileId && !!letterOptions?.[selectedTileId];
+    selectedTileId && !!letterOptions?.[selectedTileId[0]];
 
   return (
-  <div className="w-full h-[2rem] sm:h-[4rem] md:h-[4.75rem] xl:h-[5rem] flex justify-center items-center my-2">
+    <div className="w-full h-[2rem] sm:h-[4rem] md:h-[4.75rem] xl:h-[5rem] flex justify-center items-center my-2">
       {!selectedLetterTile && <div>Select Tile</div>}
       {selectedLetterTile && createLetterTiles()}
     </div>

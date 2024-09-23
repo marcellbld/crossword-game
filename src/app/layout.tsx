@@ -4,6 +4,7 @@ import "./globals.css";
 import SocketContextProvider from "@/contexts/socket-context-provider";
 import RoomContextProvider from "@/contexts/room-context-provider";
 import PuzzleContextProvider from "@/contexts/puzzle-context-provider";
+import Header from "@/components/header/header";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,11 +30,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen bg-gradient-to-b from-[#69170B] to-[#802A19]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-page`}
       >
         <PuzzleContextProvider>
           <RoomContextProvider>
-            <SocketContextProvider>{children}</SocketContextProvider>
+            <SocketContextProvider>
+              <div className="flex flex-col h-screen">
+                <Header />
+                {children}
+              </div>
+            </SocketContextProvider>
           </RoomContextProvider>
         </PuzzleContextProvider>
       </body>

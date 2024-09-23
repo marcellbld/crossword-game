@@ -1,11 +1,11 @@
-import { DicesIcon, Loader } from "lucide-react";
+import { Loader, PlayIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { createRandomGame } from "@/actions/actions";
 import { useRouter } from "next/navigation";
 import { Room } from "@prisma/client";
 
-export default function RandomGameButton() {
+export default function SingleplayerGameButton() {
   const [pending, setPending] = useState(false);
   const router = useRouter();
 
@@ -33,8 +33,8 @@ export default function RandomGameButton() {
       {pending && <Loader className="animate-spin" />}
       {!pending && (
         <div className="flex flex-col justify-center items-center gap-1">
-          <DicesIcon />
-          <span>Random</span>
+          <PlayIcon />
+          <span>Play</span>
         </div>
       )}
     </Button>

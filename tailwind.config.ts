@@ -61,10 +61,14 @@ const config: Config = {
 					empty: 'var(--tile-question)',
 				},
 				board: {
-					DEFAULT: 'var(--board-background)',
+					DEFAULT: 'var(--board)',
+					background: 'var(--board-background)',
 				},
 				question: {
 					DEFAULT: 'var(--question)',
+				},
+				page: {
+					DEFAULT: 'var(--page-background)'
 				}
 			},
 			borderRadius: {

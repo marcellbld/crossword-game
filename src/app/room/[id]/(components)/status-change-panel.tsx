@@ -11,8 +11,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./ui/drawer";
-import { Button } from "./ui/button";
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -20,10 +20,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
+} from "@/components/ui/table";
 
 type PointChange = {
-  socketId: string;
+  name: string;
   change: number;
 };
 
@@ -45,7 +45,7 @@ export default function StatusChangePanel() {
 
       if (player.score !== playerCopy.score) {
         const newPointChange = {
-          socketId: player.socketId.substring(0, 5),
+          name: player.name,
           change: player.score - playerCopy.score,
         } as PointChange;
 
@@ -120,7 +120,7 @@ export default function StatusChangePanel() {
                       {pointChanges.map((pointChange, index) => (
                         <TableRow key={index}>
                           <TableCell className="text-center font-medium">
-                            {pointChange.socketId}
+                            {pointChange.name}
                           </TableCell>
                           <TableCell className="text-center">
                             Points changed
@@ -150,8 +150,8 @@ export default function StatusChangePanel() {
 function createPointChangeLine(pointChange: PointChange) {
   return (
     <div className="text-xs sm:text-sm md:text-md lg:text-lg">
-      <span className="font-semibold">{pointChange.socketId}&apos;s</span>{" "}
-      points changed
+      <span className="font-semibold">{pointChange.name}&apos;s</span> points
+      changed
       {createChangeValueSpan(pointChange.change)}
     </div>
   );
@@ -161,6 +161,6 @@ function createChangeValueSpan(change: number) {
   return change > 0 ? (
     <span className="font-semibold text-green-600"> +{change}</span>
   ) : (
-    <span className="font-semibold text-red-600m"> {change}</span>
+    <span className="font-semibold text-red-600"> {change}</span>
   );
 }

@@ -1,12 +1,6 @@
 import { Puzzle } from "@/lib/types/puzzle-types";
-import { Socket } from "socket.io-client";
 import { TileLetter, LetterOption } from "./tile";
-
-export type PlayerData = {
-  socketId: string;
-  color: string;
-  score: number;
-}
+import { SocketData } from "./socket-types";
 
 export type InitialRoomData = {
   basePuzzle: Puzzle;
@@ -21,19 +15,7 @@ export type InitialRoomData = {
 
 export type RoomData = Pick<InitialRoomData, "progressBoard" | "letterOptions" | "players">;
 
-export type SetLetterSocketData = {
-  position: number;
-  letter: string;
-}
-
-export type SetLetterSocketCallbackData = {
-  socketId: Socket["id"];
-  position: number;
-  letter: string;
-  success: boolean;
-}
-
-export type PlayerScoreChangedData = {
-  socketId: string;
+export type PlayerData = Omit<SocketData, "socketId" | "sessionId"> & {
+  color: string;
   score: number;
 }
