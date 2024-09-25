@@ -53,7 +53,7 @@ app.prepare().then(() => {
     const session = {
       userId: uuidv4(),
       name,
-      gameProgress: { level: 0 }
+      gameProgress: { level: 1 }
     }
 
     socket.data.socketId = socket.id;

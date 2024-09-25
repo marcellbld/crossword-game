@@ -1,56 +1,47 @@
-"use client";
-
-import Tile from "./tile";
-import { TileModel } from "@/lib/models/tile-model";
+import Board from "@/components/board";
 import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
-import { PlayerData } from "@/shared/types";
-import { cn } from "@/lib/utils";
+import { TileType } from "@/shared/types";
 
-export default function GameBoard({ tiles }: { tiles: TileModel[] }) {
-  const { progressBoard } = usePuzzleContext();
+export default function GameBoard() {
+  const {
+    tiles,
+    progressBoard,
+    setSelectedTileId,
+    selectedTileId,
+    getSelectedTiles,
+  } = usePuzzleContext();
 
   const { players } = useRoomContext();
 
-  const createTile = (
-    tileModel: TileModel,
-    index: number,
-    solvedBy?: PlayerData | null
-  ) => {
-    return (
-      <Tile
-        index={index}
-        key={index}
-        tileModel={tileModel}
-        className={cn(getTileRoundedClass(index))}
-        solvedBy={solvedBy}
-      />
-    );
+  const isSelected = (index: number, itemId: number, tileType: TileType) => {
+    if (tileType === TileType.Question) {
+      return selectedTileId?.[0] === index && selectedTileId?.[1] === itemId;
+    }
+
+    return getSelectedTiles().includes(index);
+  };
+
+  const handleClick = (index: number, itemId: number) => {
+    setSelectedTileId([index, itemId ?? 0]);
+  };
+
+  const handleSolvedBy = (index: number) => {
+    const solvedByUserId = progressBoard?.[index]?.solvedBy || null;
+    const solvedBy = players.find(p => p.userId === solvedByUserId);
+
+    return solvedBy ?? null;
   };
 
   return (
-    <div className="grid grid-cols-8 grid-rows-8 gap-[0.125rem] aspect-square">
-      {tiles &&
-        tiles.map((tile, index) => {
-          const solvedByUserId = progressBoard?.[index]?.solvedBy || null;
-          const solvedBy = players.find(p => p.userId === solvedByUserId);
-
-          return createTile(tile, index, solvedBy);
-        })}
-    </div>
+    <>
+      {tiles && (
+        <Board
+          tiles={tiles}
+          handleTileClick={handleClick}
+          handleIsSelected={isSelected}
+          handleSolvedBy={handleSolvedBy}
+        />
+      )}
+    </>
   );
-}
-
-function getTileRoundedClass(index: number) {
-  switch (index) {
-    case 0:
-      return `rounded-tl-lg`;
-    case 7:
-      return `rounded-tr-lg`;
-    case 56:
-      return `rounded-bl-lg`;
-    case 63:
-      return `rounded-br-lg`;
-    default:
-      return "";
-  }
 }

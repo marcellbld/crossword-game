@@ -13,7 +13,10 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
   (socket: Socket) => {
     console.log("User connected", socket.id);
 
-    socket.emit("session", socket.data);
+    const session = sessionStore.findSession(socket.data.sessionId);
+    if (session) {
+      socket.emit("session", socket.data, session.gameProgress);
+    }
 
     const leaveSocketRoom = async (room: string) => {
       await leaveRoom(socket, room);
@@ -53,9 +56,8 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
       if (session) {
         session.name = name;
         sessionStore.saveSession(socket.data.sessionId, session);
+        socket.emit("session", socket.data, session.gameProgress);
       }
-
-      socket.emit("session", socket.data);
     });
 
     socket.on("leaveRoom", async (roomId: string) => {

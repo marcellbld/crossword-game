@@ -3,6 +3,7 @@
 import { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import {
+  GameProgress,
   InitialRoomData,
   ClientSocket as Socket,
   SocketData,
@@ -12,6 +13,7 @@ import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
 type TSocketContext = {
   id: string | null;
   name: string | null;
+  gameProgress: GameProgress | null;
   joinRoom: (roomId: string) => void;
   setLetter: (position: number, letter: string) => void;
   setName: (name: string) => void;
@@ -26,6 +28,7 @@ export default function SocketContextProvider({
 }) {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [socketData, setSocketData] = useState<SocketData | null>(null);
+  const [gameProgress, setGameProgress] = useState<GameProgress | null>(null);
   const { addPlayer, removePlayer, addScore, setPlayers } = useRoomContext();
   const { setLetter: setPuzzleLetter, setupInitials } = usePuzzleContext();
 
@@ -49,12 +52,13 @@ export default function SocketContextProvider({
       setSocket(socket);
     });
 
-    socket.on("session", data => {
+    socket.on("session", (data: SocketData, gameProgress: GameProgress) => {
       socket.auth = { sessionId: data.sessionId };
 
       localStorage.setItem("sessionId", data.sessionId);
 
       setSocketData(data);
+      setGameProgress(gameProgress);
     });
 
     socket.on("disconnect", () => {
@@ -112,6 +116,7 @@ export default function SocketContextProvider({
       value={{
         id: socket?.id ?? null,
         name: socketData?.name ?? null,
+        gameProgress: gameProgress,
         joinRoom,
         setLetter,
         setName,

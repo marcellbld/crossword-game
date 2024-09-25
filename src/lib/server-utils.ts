@@ -1,6 +1,6 @@
 "server-only"
 
-import { Room } from "@prisma/client";
+import { BaseQuestion, Prisma, Room } from "@prisma/client";
 import prisma from "./db";
 import { Puzzle } from "./types/puzzle-types";
 
@@ -60,4 +60,38 @@ export async function getPuzzle(puzzleId: number): Promise<Puzzle | null> {
   });
 
   return puzzle;
+}
+
+export async function findAllBaseQuestions(maxLength: number, characters: string[], ignoreQuestions: number[]): Promise<BaseQuestion[]> {
+
+  let startsWith = "";
+  for (let i = 0; i < characters.length; i++) {
+    if (characters[i]) {
+      startsWith += characters[i];
+    } else {
+      startsWith += "_";
+    }
+  }
+  startsWith += "%";
+
+  let baseQuestions = [];
+
+  if (ignoreQuestions.length > 0) {
+
+    baseQuestions = await prisma.$queryRaw<BaseQuestion[]>`
+    SELECT * FROM "BaseQuestion" 
+      WHERE LENGTH("answer") <= ${maxLength}
+        AND "id" NOT IN (${Prisma.join(ignoreQuestions)})
+        AND "answer" ILIKE ${startsWith}
+  `;
+  } else {
+    baseQuestions = await prisma.$queryRaw<BaseQuestion[]>`
+    SELECT * FROM "BaseQuestion" 
+      WHERE LENGTH("answer") <= ${maxLength}
+        AND "answer" ILIKE ${startsWith}
+  `;
+  }
+
+
+  return baseQuestions;
 }

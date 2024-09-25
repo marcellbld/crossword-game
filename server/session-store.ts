@@ -1,11 +1,9 @@
-import { Session } from "./session";
+import { Session } from "@/shared/types";
 
 export class InMemorySessionStore {
   static #instance: InMemorySessionStore;
 
   private constructor() {
-    console.log("CREATING NEW INMEMORYSESSIONSTORE");
-
     this.sessions = new Map();
   }
 

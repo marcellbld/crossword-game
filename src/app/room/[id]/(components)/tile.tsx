@@ -7,39 +7,27 @@ import { PLAYER_COLORS, PlayerData, TileType } from "@/shared/types";
 import { BsCircleFill, BsTriangleFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 import TileEmoji from "./tile-emoji";
-import { usePuzzleContext } from "@/lib/hooks/hooks";
 
 export default function Tile({
   index,
   tileModel,
   className,
   solvedBy,
+  isSelected,
+  handleClick,
 }: {
   index: number;
   tileModel: TileModel;
   className?: string;
   solvedBy?: PlayerData | null;
+  isSelected: (index: number, itemId: number, tileType: TileType) => boolean;
+  handleClick: (index: number, itemId: number) => void;
 }) {
   const tileType = tileModel.type;
   const BORDER_COLORS = [`border-[#3498db]`, `border-[#e74c3c]`];
 
   const itemNumber =
     tileModel.type === TileType.Question ? tileModel.content!.length : 1;
-
-  const { selectedTileId, setSelectedTileId, getSelectedTiles } =
-    usePuzzleContext();
-
-  const handleClick = (itemId?: number) => {
-    setSelectedTileId([index, itemId ?? 0]);
-  };
-
-  const isSelected = (itemId: number) => {
-    if (tileType === TileType.Question) {
-      return selectedTileId?.[0] === index && selectedTileId?.[1] === itemId;
-    }
-
-    return getSelectedTiles().includes(index);
-  };
 
   return (
     <div className={cn("size-full flex flex-col")}>
@@ -48,7 +36,7 @@ export default function Tile({
       }).map((_, itemId) => (
         <div
           key={itemId}
-          onClick={() => handleClick(itemId)}
+          onClick={() => handleClick(index, itemId)}
           className={cn(
             "w-full flex justify-center items-center relative",
             itemNumber > 1 ? "h-[50%]" : "h-full"
@@ -59,7 +47,8 @@ export default function Tile({
               "size-full flex justify-center items-center rounded transition-colors bg-white",
               getBackgroundClass(tileModel),
               getHoverClass(tileModel),
-              isSelected(itemId) && getSelectedClass(tileModel),
+              isSelected(index, itemId, tileType) &&
+                getSelectedClass(tileModel),
               solvedBy && "border-[4px] border-opacity-75 rounded-md",
               solvedBy && BORDER_COLORS[PLAYER_COLORS.indexOf(solvedBy.color)],
               className
@@ -89,7 +78,7 @@ function getSelectedClass(tileModel: TileModel) {
     case TileType.Question:
       return "border-2 border-blue-400 bg-tile-question-selected";
     case TileType.Empty:
-      return "";
+      return "border-2 border-blue-400 bg-tile-question-selected";
     default:
       return "";
   }

@@ -1,7 +1,7 @@
 "use client";
 
+import GameBoardResponsiveWrapper from "@/components/board-responsive-wrapper";
 import GameBoard from "./(components)/game-board";
-import GameBoardResponsiveWrapper from "./(components)/game-board-responsive-wrapper";
 import LetterSelectPanel from "./(components)/letter-select-panel";
 import PlayerInfoPanel from "./(components)/player-info-panel";
 import StatusChangePanel from "./(components)/status-change-panel";
@@ -39,7 +39,7 @@ export default function RoomIdPage() {
           <div className="bg-board-background shadow shadow-slate-500 border border-slate-700/25 p-2 rounded-[3rem] flex flex-col gap-3">
             <PlayerInfoPanel />
             <div className="border-2 border-[#4b3a2b] bg-board rounded-lg shadow-md shadow-slate-700">
-              <GameBoard tiles={tiles!} />
+              <GameBoard />
             </div>
             <StatusChangePanel />
             <LetterSelectPanel />

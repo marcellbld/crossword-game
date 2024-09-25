@@ -1,3 +1,4 @@
+import { CreatorContext } from "@/contexts/creator-context-provider";
 import { PuzzleContext } from "@/contexts/puzzle-context-provider";
 import { RoomContext } from "@/contexts/room-context-provider";
 import { SocketContext } from "@/contexts/socket-context-provider";
@@ -23,6 +24,14 @@ export function useRoomContext() {
   const context = useContext(RoomContext);
 
   if (!context) throw new Error("useRoomContext must be used within a RoomContextProvider");
+
+  return context;
+}
+
+export function useCreatorContext() {
+  const context = useContext(CreatorContext);
+
+  if (!context) throw new Error("useCreatorContext must be used within a CreatorContextProvider");
 
   return context;
 }

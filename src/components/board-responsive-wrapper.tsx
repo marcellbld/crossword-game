@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function GameBoardResponsiveWrapper({
+export default function BoardResponsiveWrapper({
   children,
 }: {
   children: React.ReactNode;

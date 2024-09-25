@@ -70,5 +70,17 @@
     "type": "text",
     "content": "Nem ez",
     "answer": "Az"
+  },
+  {
+    "id": 12,
+    "type": "emoji",
+    "content": "school",
+    "answer": "Iskola"
+  },
+  {
+    "id": 13,
+    "type": "emoji",
+    "content": "tiger",
+    "answer": "Tigris"
   }
 ]
