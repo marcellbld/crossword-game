@@ -16,8 +16,10 @@ export async function createRandomGame(): Promise<Room | undefined> {
 export async function getBaseQuestions(maxLength: number, characters: string[], ignoreQuestions: number[]): Promise<BaseQuestion[]> {
   try {
     return await findAllBaseQuestions(maxLength, characters, ignoreQuestions);
-  } catch (e) {
-    console.log(e.message);
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      console.log(e.message);
+    }
 
     throw new Error("Failed to get base questions");
   }
