@@ -2,7 +2,6 @@
 
 import Tile from "../app/room/[id]/(components)/tile";
 import { TileModel } from "@/lib/models/tile-model";
-import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
 import { PlayerData, TileType } from "@/shared/types";
 import { cn } from "@/lib/utils";
 

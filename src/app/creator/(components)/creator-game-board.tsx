@@ -1,6 +1,5 @@
 import Board from "@/components/board";
 import { useCreatorContext } from "@/lib/hooks/hooks";
-import { TileType } from "@/shared/types";
 import React from "react";
 
 export default function CreatorGameBoard() {
@@ -10,15 +9,11 @@ export default function CreatorGameBoard() {
     selectTile([index, itemId]);
   };
 
-  const handleIsSelected = (
-    index: number,
-    itemId: number,
-    tileType: TileType
-  ) => {
+  const handleIsSelected = (index: number, itemId: number) => {
     return selectedTileId?.[0] === index && selectedTileId?.[1] === itemId;
   };
 
-  const handleSolvedBy = (_: number) => {
+  const handleSolvedBy = () => {
     return null;
   };
 
