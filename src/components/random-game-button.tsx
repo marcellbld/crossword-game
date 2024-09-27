@@ -29,6 +29,7 @@ export default function RandomGameButton() {
       onClick={() => handleClick()}
       size="lg"
       className="h-16"
+      variant="secondary"
     >
       {pending && <Loader className="animate-spin" />}
       {!pending && (

@@ -1,4 +1,4 @@
-import { Session } from "@/shared/types";
+import { Session } from "../src/shared/types";
 
 export class InMemorySessionStore {
   static #instance: InMemorySessionStore;
@@ -24,9 +24,5 @@ export class InMemorySessionStore {
 
   saveSession(id: string, session: Session) {
     this.sessions.set(id, session);
-    console.log("saved session");
-    console.log(session);
-
-
   }
 }

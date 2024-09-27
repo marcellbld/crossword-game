@@ -31,16 +31,12 @@ function convertToTileType(type: string) {
 
 function convertToDirectionType(type: string) {
   switch (type) {
-    case "top":
-      return 0;
     case "right":
       return 1;
     case "bottom":
       return 2;
-    case "left":
-      return 3;
     default:
-      return 0;
+      return 1;
   }
 }
 
@@ -101,8 +97,6 @@ async function main() {
       }
     }
 
-    // for (const tile of data) {
-    // }
     console.log(`Seeding finished.`);
   }
 }

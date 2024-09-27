@@ -58,7 +58,8 @@ const config: Config = {
 						DEFAULT: 'var(--tile-simple)',
 						selected: 'var(--tile-simple-selected)'
 					},
-					empty: 'var(--tile-question)',
+					empty: 'var(--tile-empty)',
+					creator: 'var(--tile-creator-block)',
 				},
 				board: {
 					DEFAULT: 'var(--board)',

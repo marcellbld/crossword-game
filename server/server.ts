@@ -5,6 +5,7 @@ import { socketHandler } from "./socket-handlers";
 import { ClientToServerEvents, ServerToClientEvents, SocketData } from "@/shared/types";
 import { v4 as uuidv4 } from "uuid";
 import { InMemorySessionStore } from "./session-store";
+import { createUserProgress } from "../src/actions/user-progress-actions";
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
@@ -31,7 +32,7 @@ app.prepare().then(() => {
 
   io.on("connection", socketHandler(io));
 
-  io.use((socket, next) => {
+  io.use(async (socket, next) => {
     const sessionId = socket.handshake.auth.sessionId;
     if (sessionId) {
       const session = sessionStore.findSession(sessionId);
@@ -52,14 +53,15 @@ app.prepare().then(() => {
     const newSessionId = uuidv4();
     const session = {
       userId: uuidv4(),
-      name,
-      gameProgress: { level: 1 }
+      name
     }
 
     socket.data.socketId = socket.id;
     socket.data.sessionId = newSessionId;
     socket.data.userId = session.userId;
     socket.data.name = session.name;
+
+    await createUserProgress(session.userId);
 
     sessionStore.saveSession(newSessionId, session);
 

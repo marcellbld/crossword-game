@@ -82,5 +82,287 @@
     "type": "emoji",
     "content": "tiger",
     "answer": "Tigris"
+  },
+  {
+    "id": 14,
+    "type": "text",
+    "content": "Római I",
+    "answer": "Egy"
+  },
+  {
+    "id": 15,
+    "type": "text",
+    "content": "Római X",
+    "answer": "Tíz"
+  },
+  {
+    "id": 16,
+    "type": "emoji",
+    "content": "dog2",
+    "answer": "Kutya"
+  },
+  {
+    "id": 17,
+    "type": "emoji",
+    "content": "dollar",
+    "answer": "Pénz"
+  },
+  {
+    "id": 18,
+    "type": "emoji",
+    "content": "monkey",
+    "answer": "Majom"
+  },
+  {
+    "id": 19,
+    "type": "emoji",
+    "content": "pig2",
+    "answer": "Malac"
+  },
+  {
+    "id": 20,
+    "type": "emoji",
+    "content": "pretzel",
+    "answer": "Perec"
+  },
+  {
+    "id": 21,
+    "type": "emoji",
+    "content": "rock",
+    "answer": "Kő"
+  },
+  {
+    "id": 22,
+    "type": "emoji",
+    "content": "rocket",
+    "answer": "Rakéta"
+  },
+  {
+    "id": 23,
+    "type": "emoji",
+    "content": "rose",
+    "answer": "Rózsa"
+  },
+  {
+    "id": 24,
+    "type": "emoji",
+    "content": "salt",
+    "answer": "Só"
+  },
+  {
+    "id": 25,
+    "type": "emoji",
+    "content": "scissors",
+    "answer": "Olló"
+  },
+  {
+    "id": 26,
+    "type": "emoji",
+    "content": "shirt",
+    "answer": "Póló"
+  },
+  {
+    "id": 27,
+    "type": "emoji",
+    "content": "shrimp",
+    "answer": "Rák"
+  },
+  {
+    "id": 28,
+    "type": "emoji",
+    "content": "framed_picture",
+    "answer": "Kép"
+  },
+  {
+    "id": 29,
+    "type": "emoji",
+    "content": "sloth",
+    "answer": "Lajhár"
+  },
+  {
+    "id": 30,
+    "type": "emoji",
+    "content": "snail",
+    "answer": "Csiga"
+  },
+  {
+    "id": 31,
+    "type": "emoji",
+    "content": "snake",
+    "answer": "Kígyó"
+  },
+  {
+    "id": 32,
+    "type": "emoji",
+    "content": "star",
+    "answer": "Csillag"
+  },
+  {
+    "id": 33,
+    "type": "emoji",
+    "content": "sun_with_face",
+    "answer": "Nap"
+  },
+  {
+    "id": 34,
+    "type": "emoji",
+    "content": "tickets",
+    "answer": "Jegy"
+  },
+  {
+    "id": 35,
+    "type": "emoji",
+    "content": "watch",
+    "answer": "Óra"
+  },
+  {
+    "id": 36,
+    "type": "emoji",
+    "content": "window",
+    "answer": "Ablak"
+  },
+  {
+    "id": 37,
+    "type": "color",
+    "content": "blue",
+    "answer": "Kék"
+  },
+  {
+    "id": 38,
+    "type": "color",
+    "content": "black",
+    "answer": "Fekete"
+  },
+  {
+    "id": 39,
+    "type": "color",
+    "content": "yellow",
+    "answer": "Sárga"
+  },
+  {
+    "id": 40,
+    "type": "color",
+    "content": "purple",
+    "answer": "Lila"
+  },
+  {
+    "id": 41,
+    "type": "text",
+    "content": "Méhek készítik",
+    "answer": "Méz"
+  },
+  {
+    "id": 42,
+    "type": "text",
+    "content": "Éles tárgy",
+    "answer": "Kés"
+  },
+  {
+    "id": 43,
+    "type": "text",
+    "content": "Négy kerékkel mozog",
+    "answer": "Autó"
+  },
+  {
+    "id": 44,
+    "type": "text",
+    "content": "Fa része",
+    "answer": "Ág"
+  },
+  {
+    "id": 45,
+    "type": "text",
+    "content": "A vörös bolygó",
+    "answer": "Mars"
+  },
+  {
+    "id": 46,
+    "type": "text",
+    "content": "Az óriásbolygó",
+    "answer": "Jupiter"
+  },
+  {
+    "id": 47,
+    "type": "text",
+    "content": "Futók használják",
+    "answer": "Cipő"
+  },
+  {
+    "id": 48,
+    "type": "text",
+    "content": "Fák teteje",
+    "answer": "Lomb"
+  },
+  {
+    "id": 49,
+    "type": "text",
+    "content": "Sárga citrus",
+    "answer": "Citrom"
+  },
+  {
+    "id": 50,
+    "type": "text",
+    "content": "Tojást tojik",
+    "answer": "Tyúk"
+  },
+  {
+    "id": 51,
+    "type": "text",
+    "content": "Egy hét napja",
+    "answer": "Kedd"
+  },
+  {
+    "id": 52,
+    "type": "text",
+    "content": "Egy hét napja",
+    "answer": "Hétfő"
+  },
+  {
+    "id": 53,
+    "type": "text",
+    "content": "Nyári édesség",
+    "answer": "Fagyi"
+  },
+  {
+    "id": 54,
+    "type": "emoji",
+    "content": "pizza",
+    "answer": "Pizza"
+  },
+  {
+    "id": 55,
+    "type": "emoji",
+    "content": "cow2",
+    "answer": "Tehén"
+  },
+  {
+    "id": 56,
+    "type": "text",
+    "content": "Fényforrás",
+    "answer": "Lámpa"
+  },
+  {
+    "id": 57,
+    "type": "text",
+    "content": "Szőlőből készül",
+    "answer": "Bor"
+  },
+  {
+    "id": 58,
+    "type": "text",
+    "content": "Hosszú gyümölcs",
+    "answer": "Banán"
+  },
+  {
+    "id": 59,
+    "type": "text",
+    "content": "Búzából készül",
+    "answer": "Liszt"
+  },
+  {
+    "id": 60,
+    "type": "text",
+    "content": "Írásjel",
+    "answer": "Pont"
   }
 ]

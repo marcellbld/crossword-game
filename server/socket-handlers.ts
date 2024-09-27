@@ -6,16 +6,18 @@ import {
   PlayerData
 } from '../src/shared/types';
 import { InMemorySessionStore } from './session-store';
+import { findUserProgress } from '../src/lib/server-utils';
 
 const sessionStore = InMemorySessionStore.instance;
 
 export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEvents, [], SocketData>) =>
-  (socket: Socket) => {
+  async (socket: Socket) => {
     console.log("User connected", socket.id);
 
     const session = sessionStore.findSession(socket.data.sessionId);
     if (session) {
-      socket.emit("session", socket.data, session.gameProgress);
+      const userProgress = await findUserProgress(session.userId);
+      socket.emit("session", socket.data, userProgress);
     }
 
     const leaveSocketRoom = async (room: string) => {
@@ -35,6 +37,20 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
       io.to(room).emit("setLetter", socket.data.userId, position, letter, success);
     });
 
+
+    // socket.on('playGame', async (roomId: string, callback: (data: InitialRoomData) => void) => {
+    //   const initialRoomData = await joinToRoom(socket, roomId);
+
+    //   const player = initialRoomData.players.find((p: PlayerData) => p.userId === socket.data.userId);
+    //   if (!player) throw new Error("Player not found");
+
+    //   socket.to(roomId).emit("joinedRoom", player);
+
+    //   callback(initialRoomData as InitialRoomData);
+
+    //   await socket.join(roomId);
+    // });
+
     socket.on('joinRoom', async (roomId: string, callback: (data: InitialRoomData) => void) => {
       const initialRoomData = await joinToRoom(socket, roomId);
 
@@ -48,7 +64,7 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
       await socket.join(roomId);
     });
 
-    socket.on("setName", (name: string) => {
+    socket.on("setName", async (name: string) => {
       socket.data.name = name;
 
       const session = sessionStore.findSession(socket.data.sessionId);
@@ -56,7 +72,8 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
       if (session) {
         session.name = name;
         sessionStore.saveSession(socket.data.sessionId, session);
-        socket.emit("session", socket.data, session.gameProgress);
+        const userProgress = await findUserProgress(session.userId);
+        socket.emit("session", socket.data, userProgress);
       }
     });
 

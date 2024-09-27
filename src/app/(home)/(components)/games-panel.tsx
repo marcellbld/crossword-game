@@ -6,7 +6,7 @@ import { Separator } from "@radix-ui/react-separator";
 import Image from "next/image";
 
 export default function GamesPanel() {
-  const { gameProgress } = useSocketContext();
+  const { userProgress } = useSocketContext();
 
   return (
     <Card className="w-[500px] rounded-3xl">
@@ -27,7 +27,7 @@ export default function GamesPanel() {
             />
             <div className="flex flex-col justify-center items-center gap-1">
               <div className="font-semibold">Progress</div>
-              <div>Level {gameProgress?.level ?? 0}</div>
+              <div>Level {userProgress?.level ?? 0}</div>
             </div>
           </div>
         </div>

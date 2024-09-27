@@ -48,3 +48,8 @@ model BaseQuestion {
 
   Question        Question[]
 }
+
+model UserProgress {
+  userId          String       @id
+  level           Int          @default(0)
+}

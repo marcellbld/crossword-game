@@ -105,6 +105,8 @@ function getBackgroundClass(tileModel: TileModel) {
       return "bg-tile-question shadow-box-question";
     case TileType.Empty:
       return "bg-tile-empty shadow-box-question";
+    case TileType.CreatorBlock:
+      return "bg-tile-creator shadow-box-simple";
     default:
       return "";
   }

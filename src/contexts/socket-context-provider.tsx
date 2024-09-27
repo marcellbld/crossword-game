@@ -3,17 +3,17 @@
 import { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import {
-  GameProgress,
   InitialRoomData,
   ClientSocket as Socket,
   SocketData,
 } from "../shared/types";
 import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
+import { UserProgress } from "@prisma/client";
 
 type TSocketContext = {
   id: string | null;
   name: string | null;
-  gameProgress: GameProgress | null;
+  userProgress: UserProgress | null;
   joinRoom: (roomId: string) => void;
   setLetter: (position: number, letter: string) => void;
   setName: (name: string) => void;
@@ -28,7 +28,7 @@ export default function SocketContextProvider({
 }) {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [socketData, setSocketData] = useState<SocketData | null>(null);
-  const [gameProgress, setGameProgress] = useState<GameProgress | null>(null);
+  const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const { addPlayer, removePlayer, addScore, setPlayers } = useRoomContext();
   const { setLetter: setPuzzleLetter, setupInitials } = usePuzzleContext();
 
@@ -52,14 +52,17 @@ export default function SocketContextProvider({
       setSocket(socket);
     });
 
-    socket.on("session", (data: SocketData, gameProgress: GameProgress) => {
-      socket.auth = { sessionId: data.sessionId };
+    socket.on(
+      "session",
+      (data: SocketData, userProgress: UserProgress | null) => {
+        socket.auth = { sessionId: data.sessionId };
 
-      localStorage.setItem("sessionId", data.sessionId);
+        localStorage.setItem("sessionId", data.sessionId);
 
-      setSocketData(data);
-      setGameProgress(gameProgress);
-    });
+        setSocketData(data);
+        setUserProgress(userProgress);
+      }
+    );
 
     socket.on("disconnect", () => {
       console.log("DISCONNECTED");
@@ -116,7 +119,7 @@ export default function SocketContextProvider({
       value={{
         id: socket?.id ?? null,
         name: socketData?.name ?? null,
-        gameProgress: gameProgress,
+        userProgress,
         joinRoom,
         setLetter,
         setName,

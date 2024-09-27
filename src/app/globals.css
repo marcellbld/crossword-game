@@ -34,10 +34,13 @@ body {
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
+    /* --primary: 222.2 47.4% 11.2%; */
+    --primary: 204 69.9% 53.1%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* --secondary: 210 40% 96.1%; */
+    --secondary: 24 69.9% 53.1%;
+    /* --secondary-foreground: 222.2 47.4% 11.2%; */
+    --secondary-foreground: 210 40% 98%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
@@ -58,6 +61,8 @@ body {
     --tile-simple-selected: rgb(232, 246, 255);
     --tile-question: rgb(193, 221, 255);
     --tile-question-selected: rgb(171, 213, 226);
+    --tile-creator-block: rgb(172, 187, 206);
+    --tile-empty: rgb(193, 221, 255);
     --board-background: rgb(247, 238, 218);
     --question: rgb(34, 35, 44);
 

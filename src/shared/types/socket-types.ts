@@ -1,11 +1,10 @@
 import { Socket as _ServerSocket } from "socket.io";
 import { Socket as _ClientSocket } from "socket.io-client";
 import { InitialRoomData, PlayerData } from "./socket-data";
-import { Room } from "@prisma/client";
-import { GameProgress } from "./session-types";
+import { Room, UserProgress } from "@prisma/client";
 
 export type ServerToClientEvents = {
-  session: (data: SocketData, gameProgress: GameProgress) => void;
+  session: (data: SocketData, userProgress: UserProgress | null) => void;
   joinedRoom: (socket: PlayerData) => void;
   leftRoom: (userId: string) => void;
   setLetter: (userId: string, position: number, letter: string, success: boolean) => void;

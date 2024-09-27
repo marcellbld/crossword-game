@@ -5,7 +5,10 @@ import { QuestionDirection } from "@/lib/types/question-types";
 import { TileModel } from "@/lib/models/tile-model";
 import { BaseQuestion } from "@prisma/client";
 import { createContext } from "react";
-import { useCreatorQuestionTemplates } from "@/lib/hooks/creator/use-creator-question-templates";
+import {
+  QuestionTemplate,
+  useCreatorQuestionTemplates,
+} from "@/lib/hooks/creator/use-creator-question-templates";
 import { useCreatorTiles } from "@/lib/hooks/creator/use-creator-tiles";
 import { useCreatorQuestions } from "@/lib/hooks/creator/use-creator-questions";
 
@@ -23,6 +26,7 @@ type TCreatorContext = {
     maxLength: number,
     characters: string[]
   ) => Promise<BaseQuestion[]>;
+  questionTemplates: (QuestionTemplate | undefined)[][];
 };
 
 export const CreatorContext = createContext<TCreatorContext | null>(null);
@@ -55,6 +59,7 @@ export default function CreatorContextProvider({
       setTiles,
       selectedTileId,
       selectTile,
+      setSelectedDirection,
       questionTemplates,
       addQuestionTemplate,
       switchQuestionTemplate,
@@ -82,6 +87,7 @@ export default function CreatorContextProvider({
         deleteQuestion,
         setQuestion,
         getBaseQuestions,
+        questionTemplates,
       }}
     >
       {children}

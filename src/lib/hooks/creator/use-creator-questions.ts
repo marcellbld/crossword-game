@@ -16,6 +16,8 @@ export const useCreatorQuestions = (
   setTiles: (index: number[], tile: TileModel[]) => void,
   selectedTileId: number[] | null,
   selectTile: (selectedId: number[] | null) => void,
+  setSelectedDirection: (direction: QuestionDirection | null,
+    changeQuestion: boolean) => void,
   questionTemplates: (QuestionTemplate | undefined)[][],
   addQuestionTemplate: (index: number[], questionTemplate: QuestionTemplate) => void,
   switchQuestionTemplate: (index: number[]) => void,
@@ -125,23 +127,27 @@ export const useCreatorQuestions = (
     tileModel.questionType![otherId] = tile.questionType![0];
 
     setTile(selectedTileId[0], tileModel);
-    selectTile([selectedTileId[0], 1]);
     if (direction === QuestionDirection.Right) {
       switchQuestionTemplate(selectedTileId);
     }
+
+    const newId = [selectedTileId[0], id];
+    selectTile(newId);
+    const newDirection = direction === QuestionDirection.Right ? QuestionDirection.Right : QuestionDirection.Bottom;
+    setSelectedDirection(newDirection, false);
   }
 
   const deleteQuestion = () => {
     if (!tiles || !selectedTileId) return;
 
     const tile = tiles[selectedTileId[0]];
+
     if (!tile || tile.type !== TileType.Question) return;
 
-    const template = questionTemplates[selectedTileId[0]][selectedTileId[1]];
-    if (!template) return;
+    const templateLength = questionTemplates[selectedTileId[0]][selectedTileId[1]]?.baseQuestion.answer.length ?? 0;
 
-    const answerTileIds = calculateAnswerTiles(selectedTileId[0], tile.direction![selectedTileId[1]], template.baseQuestion.answer.length);
-    const blockPosition = calculateBlockPosition(selectedTileId[0], tile.direction![selectedTileId[1]], template.baseQuestion.answer.length);
+    const answerTileIds = calculateAnswerTiles(selectedTileId[0], tile.direction![selectedTileId[1]], templateLength);
+    const blockPosition = calculateBlockPosition(selectedTileId[0], tile.direction![selectedTileId[1]], templateLength);
 
     const removableTiles: number[] = [];
     for (const index of [...answerTileIds, blockPosition].filter(n => n !== null)) {

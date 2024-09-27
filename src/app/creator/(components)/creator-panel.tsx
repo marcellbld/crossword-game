@@ -2,11 +2,15 @@ import { useCreatorContext } from "@/lib/hooks/hooks";
 import CreatorGameBoard from "./creator-game-board";
 import { TileType } from "@/shared/types";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronRight, Loader, Trash2 } from "lucide-react";
+import { Loader } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { BaseQuestion } from "@prisma/client";
 import { calculateDirection } from "@/lib/game-utils";
 import { QuestionDirection } from "@/lib/types/question-types";
+import CreatorControls from "./creator-controls";
+import ExportJsonButton from "./export-json-button";
+import CreateRoomButton from "./create-room-button";
+import { shuffle } from "@/lib/utils";
 
 export default function CreatorPanel() {
   const {
@@ -31,7 +35,7 @@ export default function CreatorPanel() {
   }
 
   const filterQuestions = () => {
-    return baseQuestions.slice(0, 9);
+    return (shuffle(baseQuestions) as BaseQuestion[]).slice(0, 9);
   };
 
   const selectQuestion = (question: BaseQuestion) => {
@@ -42,6 +46,7 @@ export default function CreatorPanel() {
         : QuestionDirection.Bottom
     );
 
+    setBaseQuestions([]);
     selectTile(null);
   };
 
@@ -123,12 +128,90 @@ export default function CreatorPanel() {
     getEmptyQuestionDirection,
   ]);
 
+  const rightQuestionButtonControl = {
+    show:
+      tile?.type === TileType.Empty ||
+      (tile?.type === TileType.Question &&
+        !!selectedTileId &&
+        getEmptyQuestionDirection(selectedTileId[0]) === null),
+    disabled: selectedDirection === QuestionDirection.Right,
+    onClick: () => setSelectedDirection(QuestionDirection.Right),
+  };
+
+  const bottomQuestionButtonControl = {
+    show:
+      tile?.type === TileType.Empty ||
+      (tile?.type === TileType.Question &&
+        !!selectedTileId &&
+        getEmptyQuestionDirection(selectedTileId[0]) === null),
+    disabled: selectedDirection === QuestionDirection.Bottom,
+    onClick: () => setSelectedDirection(QuestionDirection.Bottom),
+  };
+
+  const deleteQuestionButtonControl = {
+    show: tile?.type === TileType.Question,
+    disabled: false,
+    onClick: () => deleteQuestion(),
+  };
+
+  const addSecondQuestionButtonControl = {
+    show:
+      !!selectedTileId && getEmptyQuestionDirection(selectedTileId[0]) !== null,
+    disabled: false,
+    onClick: () => addSecondQuestion(),
+  };
+
   return (
-    <div className="bg-board-background shadow shadow-slate-500 border border-slate-700/25 p-2 rounded-[3rem] flex flex-col gap-3">
+    <div className="bg-board-background shadow shadow-slate-500 border border-slate-700/25 px-2 pt-8 pb-6 rounded-[3rem] flex flex-col gap-3">
+      <div className="flex justify-between items-center px-6">
+        <CreateRoomButton />
+        <div></div>
+        <ExportJsonButton />
+      </div>
       <div className="border-2 border-[#4b3a2b] bg-board rounded-lg shadow-md shadow-slate-700">
         <CreatorGameBoard />
       </div>
-      {tile &&
+      {tile && (
+        <div className="flex justify-between gap-2 items-center px-6">
+          <div className="font-semibold ">Controls</div>
+          <div className="flex items-center gap-2">
+            <CreatorControls
+              rightQuestionButton={rightQuestionButtonControl}
+              bottomQuestionButton={bottomQuestionButtonControl}
+              deleteQuestionButton={deleteQuestionButtonControl}
+              addSecondQuestionButton={addSecondQuestionButtonControl}
+            />
+          </div>
+        </div>
+      )}
+      {selectedDirection &&
+        selectedTileId &&
+        tiles &&
+        (tiles[selectedTileId[0]].type === TileType.Empty ||
+          (tiles[selectedTileId[0]].type === TileType.Question &&
+            tiles[selectedTileId[0]].content![selectedTileId[1]] === "")) && (
+          <div className="flex justify-center items-center w-full">
+            {fetchingBaseQuestions && <Loader className="animate-spin" />}
+            {!fetchingBaseQuestions &&
+              (filterQuestions().length === 0 ? (
+                <div>Empty</div>
+              ) : (
+                <div className="grid grid-cols-3 gap-3 px-5 w-full">
+                  {filterQuestions().map(question => (
+                    <Button
+                      key={question.id}
+                      size="lg"
+                      className="rounded-3xl"
+                      onClick={() => selectQuestion(question)}
+                    >
+                      {question.answer}
+                    </Button>
+                  ))}
+                </div>
+              ))}
+          </div>
+        )}
+      {/* {tile &&
         (tile.type === TileType.Empty ||
           (tile.type === TileType.Question &&
             tiles &&
@@ -216,7 +299,7 @@ export default function CreatorPanel() {
                 </Button>
               ))}
           </div>
-        )}
+        )} */}
     </div>
   );
 }
