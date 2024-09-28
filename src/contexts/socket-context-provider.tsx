@@ -17,6 +17,8 @@ type TSocketContext = {
   joinRoom: (roomId: string) => void;
   setLetter: (position: number, letter: string) => void;
   setName: (name: string) => void;
+  playProgressGame: () => Promise<string>;
+  nextGame: () => void;
 };
 
 export const SocketContext = createContext<TSocketContext | null>(null);
@@ -30,11 +32,15 @@ export default function SocketContextProvider({
   const [socketData, setSocketData] = useState<SocketData | null>(null);
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const { addPlayer, removePlayer, addScore, setPlayers } = useRoomContext();
-  const { setLetter: setPuzzleLetter, setupInitials } = usePuzzleContext();
+  const {
+    setLetter: setPuzzleLetter,
+    setupInitials,
+    setCompleted,
+  } = usePuzzleContext();
 
   useEffect(() => {
     const socket: Socket = io({
-      autoConnect: false,
+      autoConnect: true,
       transports: ["websocket"],
     });
 
@@ -43,7 +49,7 @@ export default function SocketContextProvider({
       socket.auth = { sessionId };
     }
 
-    socket.connect();
+    // socket.connect();
 
     socket.on("connect", () => {
       console.log("CONNECTED");
@@ -69,21 +75,6 @@ export default function SocketContextProvider({
       setSocket(null);
     });
 
-    return () => {
-      socket.off("connect");
-      socket.off("session");
-      socket.off("disconnect");
-      socket.off("joinedRoom");
-      socket.off("leftRoom");
-      socket.off("changedPlayerScore");
-      socket.off("setLetter");
-    };
-  }, []);
-
-  const receiveInitialData = (socket: Socket, data: InitialRoomData) => {
-    setupInitials(data);
-    setPlayers(data.players || []);
-
     socket.on("joinedRoom", playerData => {
       addPlayer(playerData);
     });
@@ -96,13 +87,37 @@ export default function SocketContextProvider({
     socket.on("changedPlayerScore", (userId, score) => {
       addScore(userId, score);
     });
+    socket.on("completedGame", () => {
+      setCompleted(true);
+    });
+    socket.on("nextGame", (data: InitialRoomData) => {
+      setCompleted(false);
+      receiveInitialData(data);
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("session");
+      socket.off("disconnect");
+      socket.off("joinedRoom");
+      socket.off("leftRoom");
+      socket.off("changedPlayerScore");
+      socket.off("setLetter");
+      socket.off("completedGame");
+      socket.off("nextGame");
+    };
+  }, []);
+
+  const receiveInitialData = (data: InitialRoomData) => {
+    setupInitials(data);
+    setPlayers(data.players || []);
   };
 
   const joinRoom = (roomId: string) => {
     if (!socket) return;
 
     socket.emit("joinRoom", roomId, (data: InitialRoomData) => {
-      receiveInitialData(socket, data);
+      receiveInitialData(data);
     });
   };
 
@@ -114,6 +129,29 @@ export default function SocketContextProvider({
     socket?.emit("setName", name);
   };
 
+  const nextGame = () => {
+    socket?.emit("nextGame");
+  };
+
+  const playProgressGame = (): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      if (!socket) reject();
+
+      socket!
+        .timeout(10000)
+        .emit(
+          "playProgressGame",
+          (err: unknown, data: InitialRoomData, roomId: string) => {
+            if (err && err instanceof Error) {
+              reject(err.message);
+            }
+            receiveInitialData(data);
+            resolve(roomId);
+          }
+        );
+    });
+  };
+
   return (
     <SocketContext.Provider
       value={{
@@ -123,6 +161,8 @@ export default function SocketContextProvider({
         joinRoom,
         setLetter,
         setName,
+        playProgressGame,
+        nextGame,
       }}
     >
       {children}

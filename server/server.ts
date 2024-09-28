@@ -2,7 +2,7 @@ import { createServer } from "node:http";
 import next from 'next';
 import { Server } from "socket.io";
 import { socketHandler } from "./socket-handlers";
-import { ClientToServerEvents, ServerToClientEvents, SocketData } from "@/shared/types";
+import { ClientToServerEvents, ServerToClientEvents, SocketData } from "../src/shared/types";
 import { v4 as uuidv4 } from "uuid";
 import { InMemorySessionStore } from "./session-store";
 import { createUserProgress } from "../src/actions/user-progress-actions";
@@ -33,11 +33,14 @@ app.prepare().then(() => {
   io.on("connection", socketHandler(io));
 
   io.use(async (socket, next) => {
+    // console.log("MIDDLEWARE", socket.id);
+
     const sessionId = socket.handshake.auth.sessionId;
     if (sessionId) {
       const session = sessionStore.findSession(sessionId);
 
       if (session) {
+        socket.data.socketId = socket.id; // i don't know if it's needed
         socket.data.sessionId = sessionId;
         socket.data.userId = session.userId;
         socket.data.name = session.name;
@@ -65,7 +68,7 @@ app.prepare().then(() => {
 
     sessionStore.saveSession(newSessionId, session);
 
-    return next();
+    next();
   })
 
   httpServer

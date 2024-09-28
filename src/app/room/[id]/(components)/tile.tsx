@@ -64,7 +64,7 @@ export default function Tile({
               <TileContent>{createEmpty()}</TileContent>
             )}
           </div>
-          {createDirectionArrow(tileModel.direction?.[itemId])}
+          {createDirectionArrow(tileModel.direction?.[itemId], itemNumber > 1)}
         </div>
       ))}
     </div>
@@ -160,7 +160,10 @@ function createEmpty() {
   );
 }
 
-function createDirectionArrow(direction: QuestionDirection | undefined) {
+function createDirectionArrow(
+  direction: QuestionDirection | undefined,
+  isMultiQuestion: boolean
+) {
   if (!direction) return;
 
   let directionClass = "";
@@ -172,17 +175,18 @@ function createDirectionArrow(direction: QuestionDirection | undefined) {
     case QuestionDirection.Bottom:
       directionClass = "rotate-180";
       break;
-    case QuestionDirection.Left:
-      directionClass = "rotate-270";
-      break;
   }
 
   return (
     <div
       className={cn(
-        "absolute h-[calc(100%+2rem)] z-10 select-none cursor-none pointer-events-none ",
+        "absolute z-0 select-none cursor-none pointer-events-none",
+        isMultiQuestion && direction === QuestionDirection.Right
+          ? "h-[calc(200%+2rem)]"
+          : "h-[calc(100%+2rem)]",
         directionClass
       )}
+      style={{ zIndex: 2 }}
     >
       <BsTriangleFill className="size-4 text-board origin-bottom" />
     </div>

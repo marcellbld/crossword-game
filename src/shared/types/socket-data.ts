@@ -7,13 +7,15 @@ export type InitialRoomData = {
   progressBoard: {
     [k: number]: TileLetter;
   };
+  playerCapacity: number;
+  progressGame: boolean;
   players: PlayerData[];
   letterOptions: {
     [k: number]: LetterOption[];
   };
 }
 
-export type RoomData = Pick<InitialRoomData, "progressBoard" | "letterOptions" | "players">;
+export type RoomData = Pick<InitialRoomData, "progressBoard" | "letterOptions" | "players" | "playerCapacity" | "progressGame">;
 
 export type PlayerData = Omit<SocketData, "socketId" | "sessionId"> & {
   color: string;

@@ -16,8 +16,23 @@ export async function getRandomPuzzle() {
   return puzzle;
 }
 
-export async function createRoom(puzzleId: number): Promise<Room> {
+export async function createRoom(puzzleId: number, progressGame: boolean, playerCapacity: number = 2): Promise<Room> {
   const room = await prisma.room.create({
+    data: {
+      puzzleId,
+      playerCapacity,
+      progressGame
+    }
+  });
+
+  return room;
+}
+
+export async function updateRoom(roomId: string, puzzleId: number): Promise<Room> {
+  const room = await prisma.room.update({
+    where: {
+      id: roomId
+    },
     data: {
       puzzleId
     }
@@ -154,6 +169,19 @@ export async function createUserProgress(userId: string): Promise<UserProgress |
   const userProgress = await prisma.userProgress.create({
     data: {
       userId
+    }
+  });
+
+  return userProgress;
+}
+
+export async function updateUserProgress(userId: string, level: number): Promise<UserProgress | null> {
+  const userProgress = await prisma.userProgress.update({
+    where: {
+      userId
+    },
+    data: {
+      level
     }
   });
 

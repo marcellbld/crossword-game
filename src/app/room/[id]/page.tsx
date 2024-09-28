@@ -8,10 +8,12 @@ import StatusChangePanel from "./(components)/status-change-panel";
 import { usePuzzleContext, useSocketContext } from "@/lib/hooks/hooks";
 import { useRoomId } from "@/lib/hooks/use-room-id";
 import { useEffect, useState } from "react";
+import Confetti from "@/components/animations/confetti";
+import GameOverPanel from "./(components)/game-over-panel";
 
 export default function RoomIdPage() {
   const { joinRoom, id } = useSocketContext();
-  const { tiles } = usePuzzleContext();
+  const { tiles, isCompleted } = usePuzzleContext();
   const [initialized, setInitialized] = useState(false);
 
   const roomId = useRoomId();
@@ -19,33 +21,47 @@ export default function RoomIdPage() {
   useEffect(() => {
     if (tiles) {
       setInitialized(true);
+      console.log("setInitialized");
     }
-  }, [tiles]);
+  }, [tiles, setInitialized]);
 
   useEffect(() => {
+    if (id === null) return;
+
     const callJoinRoom = async () => {
       await joinRoom(roomId);
     };
-    callJoinRoom().then(() => {
-      console.log("FROM CALLJOINROOM");
-    });
+
+    setTimeout(() => {
+      callJoinRoom();
+    }, 100);
   }, [id]);
 
   return (
-    <div className="flex justify-center items-center">
-      {!initialized && <div>Loading...</div>}
-      {initialized && (
-        <GameBoardResponsiveWrapper>
-          <div className="bg-board-background shadow shadow-slate-500 border border-slate-700/25 p-2 rounded-[3rem] flex flex-col gap-3">
-            <PlayerInfoPanel />
-            <div className="border-2 border-[#4b3a2b] bg-board rounded-lg shadow-md shadow-slate-700">
-              <GameBoard />
-            </div>
-            <StatusChangePanel />
-            <LetterSelectPanel />
+    <>
+      {isCompleted && (
+        <div className="absolute size-full">
+          <div className="relative z-10 size-full bg-black/10 flex justify-center items-center">
+            <GameOverPanel className="shadow-xl border border-slate-700/50" />
           </div>
-        </GameBoardResponsiveWrapper>
+          <Confetti />
+        </div>
       )}
-    </div>
+      <div className="flex justify-center items-center">
+        {!initialized && <div>Loading...</div>}
+        {initialized && (
+          <GameBoardResponsiveWrapper>
+            <div className="bg-board-background shadow shadow-slate-500 border border-slate-700/25 p-2 rounded-[3rem] flex flex-col gap-3">
+              <PlayerInfoPanel />
+              <div className="border-2 border-[#4b3a2b] bg-board rounded-lg shadow-md shadow-slate-700">
+                <GameBoard />
+              </div>
+              <StatusChangePanel />
+              <LetterSelectPanel />
+            </div>
+          </GameBoardResponsiveWrapper>
+        )}
+      </div>
+    </>
   );
 }

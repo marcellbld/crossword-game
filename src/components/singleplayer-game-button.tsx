@@ -1,21 +1,22 @@
 import { Loader, PlayIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import { createRandomGame } from "@/actions/actions";
 import { useRouter } from "next/navigation";
-import { Room } from "@prisma/client";
+import { useSocketContext } from "@/lib/hooks/hooks";
 
 export default function SingleplayerGameButton() {
   const [pending, setPending] = useState(false);
   const router = useRouter();
 
+  const { playProgressGame } = useSocketContext();
+
   const handleClick = async () => {
     setPending(true);
 
-    await createRandomGame()
-      .then((room: Room | undefined) => {
-        if (room) {
-          router.push(`/room/${room.id}`);
+    await playProgressGame()
+      .then((roomId: string) => {
+        if (roomId) {
+          router.push(`/room/${roomId}`);
         }
       })
       .catch(() => {

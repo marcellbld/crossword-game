@@ -4,7 +4,9 @@ import {
 } from "../src/shared/types";
 import { deleteRoom, getPuzzle, getRoom } from "../src/lib/server-utils";
 import { calculateLetterOptions, calculatePuzzle } from './puzzle-utils';
-import { Puzzle } from '@/lib/types/puzzle-types';
+import { Puzzle } from '../src/lib/types/puzzle-types';
+import { Room } from "@prisma/client";
+import { nextProgressGame, nextRandomGame } from "../src/actions/actions";
 
 const rooms: Map<string, RoomData> = new Map();
 
@@ -26,14 +28,24 @@ export const addScore = async (socket: Socket, roomId: string, add: boolean) => 
   return player.score;
 }
 
+export const getRemainingLetters = (roomId: string): number => {
+  const mapRoom = rooms.get(roomId);
+  if (!mapRoom) throw new Error("MapRoom not found");
+
+  return Object.values(mapRoom.progressBoard).filter(l => l.solvedBy === null).length;
+}
+
 export const setLetter = async (socket: Socket, roomId: string, position: number, letter: string): Promise<boolean> => {
   const room = await getRoom(roomId);
   if (room === null) throw new Error("Room not found");
-  if (!rooms.has(roomId)) throw new Error("Room not found");
-  if (!rooms.get(roomId)?.players.find(p => p.userId === socket.data.userId)) throw new Error("Player not found");
 
-  const progressBoard = rooms.get(roomId)!.progressBoard;
-  const letterOptions = rooms.get(roomId)!.letterOptions;
+  const mapRoom = rooms.get(roomId);
+  if (!mapRoom) throw new Error("MapRoom not found");
+
+  if (!mapRoom.players.find(p => p.userId === socket.data.userId)) throw new Error("Player not found");
+
+  const progressBoard = mapRoom.progressBoard;
+  const letterOptions = mapRoom.letterOptions;
 
   if (progressBoard[position].solvedBy !== null) throw new Error("Tile already solved");
 
@@ -61,17 +73,22 @@ export const joinToRoom = async (socket: Socket, roomId: string): Promise<Initia
   }
 
   if (rooms.has(roomId)) {
-    const players = rooms.get(roomId)!.players;
+    const mapRoom = rooms.get(roomId);
+    if (!mapRoom) throw new Error("MapRoom not found");
+
+    const players = mapRoom.players;
+    if (players.length >= mapRoom.playerCapacity) throw new Error("Room is full");
+
     playerData.color = players.length > 0 ? PLAYER_COLORS.filter(c => !players.find(p => p.color === c))[0] : PLAYER_COLORS[0];
 
-    if (rooms.get(roomId)!.players.length >= 2 || rooms.get(roomId)!.players.find(({ userId }) => userId === socket.data.userId)) throw new Error("Room is full");
+    if (mapRoom.players.length >= 2 || mapRoom.players.find(({ userId }) => userId === socket.data.userId)) throw new Error("Room is full");
 
-    rooms.get(roomId)!.players.push(playerData);
+    mapRoom.players.push(playerData);
 
   } else {
     playerData.color = PLAYER_COLORS[0];
 
-    createRoom(puzzle, roomId, playerData);
+    createRoom(puzzle, room, playerData);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -80,10 +97,50 @@ export const joinToRoom = async (socket: Socket, roomId: string): Promise<Initia
   return {
     basePuzzle: puzzle,
     players: rooms.get(roomId)!.players,
+    playerCapacity: room.playerCapacity,
+    progressGame: room.progressGame,
     progressBoard: progressBoardOut,
     letterOptions: rooms.get(roomId)!.letterOptions,
   };
 };
+
+export const nextGame = async (roomId: string, puzzleId: number | null = null): Promise<InitialRoomData> => {
+  const mapRoom = rooms.get(roomId);
+  if (!mapRoom) throw new Error("MapRoom not found");
+
+  let room;
+  if (mapRoom.progressGame && puzzleId) {
+    room = await nextProgressGame(roomId, puzzleId);
+  } else {
+    room = await nextRandomGame(roomId);
+  }
+  if (!room) throw new Error("Room not found");
+
+  const puzzle = await getPuzzle(room.puzzleId);
+  if (!puzzle) throw new Error("Puzzle not found");
+
+  updateRoom(puzzle, room);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const progressBoardOut = Object.fromEntries(Object.entries(rooms.get(roomId)!.progressBoard).filter(([_, v]) => v.solvedBy !== null));
+
+  return {
+    basePuzzle: puzzle,
+    players: rooms.get(roomId)!.players,
+    playerCapacity: room.playerCapacity,
+    progressGame: room.progressGame,
+    progressBoard: progressBoardOut,
+    letterOptions: rooms.get(roomId)!.letterOptions,
+  };
+}
+
+export const isProgressGame = (roomId: string) => {
+  const mapRoom = rooms.get(roomId);
+  if (!mapRoom) throw new Error("MapRoom not found");
+
+  return mapRoom.progressGame;
+}
+
 
 export const leaveRoom = async (socket: Socket, roomId: string) => {
   if (!rooms.has(roomId)) throw new Error("Room not found");
@@ -102,7 +159,7 @@ export const getActiveRoom = (socket: Socket): string | undefined => {
   return Array.from(socket.rooms).filter(r => r !== socket.id)[0];
 };
 
-function createRoom(puzzle: Puzzle, roomId: string, playerData: PlayerData) {
+function createRoom(puzzle: Puzzle, room: Room, playerData: PlayerData) {
   const letters = calculatePuzzle(puzzle);
   const progressBoard = Object.fromEntries(letters);
   const letterOptions = Object.entries(progressBoard).reduce(
@@ -112,8 +169,27 @@ function createRoom(puzzle: Puzzle, roomId: string, playerData: PlayerData) {
     },
     {} as { [k: number]: LetterOption[]; });
 
-  rooms.set(roomId, {
+  rooms.set(room.id, {
     players: [playerData],
+    playerCapacity: room.playerCapacity,
+    progressGame: room.progressGame,
+    progressBoard: progressBoard,
+    letterOptions: letterOptions,
+  });
+}
+
+function updateRoom(puzzle: Puzzle, room: Room) {
+  const letters = calculatePuzzle(puzzle);
+  const progressBoard = Object.fromEntries(letters);
+  const letterOptions = Object.entries(progressBoard).reduce(
+    (acc, [key, value]) => {
+      acc[Number(key)] = calculateLetterOptions(value.letter);
+      return acc;
+    },
+    {} as { [k: number]: LetterOption[]; });
+
+  rooms.set(room.id, {
+    ...rooms.get(room.id)!,
     progressBoard: progressBoard,
     letterOptions: letterOptions,
   });

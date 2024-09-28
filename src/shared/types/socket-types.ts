@@ -9,13 +9,17 @@ export type ServerToClientEvents = {
   leftRoom: (userId: string) => void;
   setLetter: (userId: string, position: number, letter: string, success: boolean) => void;
   changedPlayerScore: (userId: string, score: number) => void;
+  completedGame: () => void;
+  nextGame: (data: InitialRoomData) => void;
 }
 
 export type ClientToServerEvents = {
   joinRoom: (roomId: Room["id"], callback: (room: InitialRoomData) => void) => void;
   leaveRoom: (roomId: Room["id"]) => void;
+  playProgressGame: (callback: (room: InitialRoomData, roomId: string) => void) => void;
   setLetter: (position: number, letter: string) => void;
   setName: (name: string) => void;
+  nextGame: () => void;
 }
 
 export type SocketData = {

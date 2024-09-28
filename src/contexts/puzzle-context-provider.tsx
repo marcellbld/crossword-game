@@ -25,6 +25,8 @@ type TPuzzleContext = {
       "basePuzzle" | "letterOptions" | "progressBoard"
     >
   ) => void;
+  isCompleted: boolean;
+  setCompleted: (completed: boolean) => void;
 };
 
 export const PuzzleContext = createContext<TPuzzleContext | null>(null);
@@ -47,6 +49,8 @@ export default function PuzzleContextProvider({
   // setupInitials(initialData.basePuzzle, initialData.progressBoard)
 
   const [selectedTileId, setSelectedTileId] = useState<number[] | null>(null);
+
+  const [isCompleted, setCompleted] = useState<boolean>(false);
 
   const getSelectedTiles = () => {
     let selectedTiles: number[] = [];
@@ -84,6 +88,7 @@ export default function PuzzleContextProvider({
   >): void => {
     setLetterOptions(() => letterOptions);
     setProgressBoard(() => progressBoard);
+    setCompleted(false);
 
     const map = Array.from({ length: 64 }).map(
       () => new TileModel({ type: TileType.Simple })
@@ -169,6 +174,8 @@ export default function PuzzleContextProvider({
         letterOptions,
         setLetter,
         setupInitials,
+        isCompleted,
+        setCompleted,
       }}
     >
       {children}
