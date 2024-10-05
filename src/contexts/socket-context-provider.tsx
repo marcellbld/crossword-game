@@ -102,7 +102,7 @@ export default function SocketContextProvider({
       socket.off("completedGame");
       socket.off("nextGame");
     };
-  });
+  }, []);
 
   const receiveInitialData = (data: InitialRoom) => {
     setupInitials(data);
