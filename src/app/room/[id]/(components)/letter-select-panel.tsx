@@ -1,5 +1,5 @@
 import { usePuzzleContext, useSocketContext } from "@/lib/hooks/context-hooks";
-import { LetterOption } from "@/shared/types";
+import { TileLetterOption } from "@/shared/types/tile";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { XIcon } from "lucide-react";
@@ -20,7 +20,7 @@ export default function LetterSelectPanel() {
 
     const createLetterTile = (
       index: number,
-      { letter, selected }: LetterOption
+      { letter, selected }: TileLetterOption
     ) => {
       const solved = !!tileLetter?.solvedBy && tileLetter?.letter === letter;
       const disabled = selected || !!tileLetter?.solvedBy;
@@ -71,7 +71,7 @@ export default function LetterSelectPanel() {
 
     return (
       <div className="h-full flex justify-center items-center gap-3">
-        {letters.map((letterOption: LetterOption, index: number) =>
+        {letters.map((letterOption: TileLetterOption, index: number) =>
           createLetterTile(index, letterOption)
         )}
       </div>

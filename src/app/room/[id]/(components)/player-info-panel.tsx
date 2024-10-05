@@ -1,6 +1,6 @@
-import { useRoomContext } from "@/lib/hooks/context-hooks";
 import React, { useEffect, useState } from "react";
 import { BsCircleFill, BsPersonFill } from "react-icons/bs";
+import { useRoomContext } from "@/lib/hooks/context-hooks";
 import FloatingText from "@/components/animations/floating-text";
 
 type PointChange = {
