@@ -1,10 +1,10 @@
 import { calculateAnswerTiles, calculateBlockPosition } from "@/lib/game-utils";
 import { TileModel } from "@/lib/models/tile-model";
-import { QuestionDirection, QuestionType } from "@/lib/types/question-types";
-import { TileType } from "@/shared/types";
 import { BaseQuestion } from "@prisma/client";
 import { useState } from "react";
 import { QuestionTemplate } from "./use-creator-question-templates";
+import { QuestionDirection, QuestionType } from "@/shared/types/question";
+import { TileType } from "@/shared/types/tile";
 
 type SimpleTemplate = {
   dependencies: number[];

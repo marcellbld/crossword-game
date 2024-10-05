@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { useCreatorContext } from "@/lib/hooks/hooks";
+import { useCreatorContext } from "@/lib/hooks/context-hooks";
 import { QuestionDirection } from "@/lib/types/question-types";
 import { TileType } from "@/shared/types";
 import { useState } from "react";

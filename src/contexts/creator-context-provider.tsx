@@ -1,7 +1,7 @@
 "use client";
 
-import { getBaseQuestions as fetchBaseQuestions } from "@/actions/actions";
-import { QuestionDirection } from "@/lib/types/question-types";
+import { QuestionDirection } from "@/shared/types/question";
+import { getBaseQuestions as fetchBaseQuestions } from "@/actions/base-question-actions";
 import { TileModel } from "@/lib/models/tile-model";
 import { BaseQuestion } from "@prisma/client";
 import { createContext } from "react";

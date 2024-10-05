@@ -1,5 +1,5 @@
-import Board from "@/components/board";
-import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
+import Board from "@/components/board/board";
+import { usePuzzleContext, useRoomContext } from "@/lib/hooks/context-hooks";
 import { TileType } from "@/shared/types";
 
 export default function GameBoard() {

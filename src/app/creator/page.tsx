@@ -1,6 +1,6 @@
 "use client";
 
-import GameBoardResponsiveWrapper from "../../components/board-responsive-wrapper";
+import GameBoardResponsiveWrapper from "../../components/board/board-responsive-wrapper";
 import CreatorContextProvider from "@/contexts/creator-context-provider";
 import CreatorPanel from "./(components)/creator-panel";
 

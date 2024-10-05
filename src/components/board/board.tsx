@@ -1,9 +1,10 @@
 "use client";
 
-import Tile from "../app/room/[id]/(components)/tile";
 import { TileModel } from "@/lib/models/tile-model";
-import { PlayerData, TileType } from "@/shared/types";
 import { cn } from "@/lib/utils";
+import { Player } from "@/shared/types/player";
+import { TileType } from "@/shared/types/tile";
+import Tile from "../../app/room/[id]/(components)/tile";
 
 export default function Board({
   tiles,
@@ -18,12 +19,12 @@ export default function Board({
     itemId: number,
     tileType: TileType
   ) => boolean;
-  handleSolvedBy: (index: number) => PlayerData | null;
+  handleSolvedBy: (index: number) => Player | null;
 }) {
   const createTile = (
     tileModel: TileModel,
     index: number,
-    solvedBy?: PlayerData | null
+    solvedBy?: Player | null
   ) => {
     return (
       <Tile

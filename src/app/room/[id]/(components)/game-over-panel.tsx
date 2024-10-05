@@ -1,6 +1,6 @@
-import NextGameButton from "@/components/next-game-button";
+import NextGameButton from "@/components/game/next-game-button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { useRoomContext } from "@/lib/hooks/hooks";
+import { useRoomContext } from "@/lib/hooks/context-hooks";
 import { cn, fetchSpecificGithubEmoji } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";

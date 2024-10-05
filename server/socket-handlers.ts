@@ -1,13 +1,11 @@
 import { Server } from 'socket.io';
+import { ClientToServerEvents, ServerToClientEvents, SocketData, ServerSocket as Socket } from '@/shared/types/socket';
+import { InitialRoom } from '@/shared/types/room';
+import { Player } from '@/shared/types/player';
 import { joinToRoom, leaveRoom, setLetter, getActiveRoom, addScore, getRemainingLetters, nextGame, isProgressGame } from './room-service';
-import {
-  ClientToServerEvents, InitialRoomData, ServerToClientEvents, SocketData,
-  ServerSocket as Socket,
-  PlayerData
-} from '../src/shared/types';
 import { InMemorySessionStore } from './session-store';
-import { createGame } from '../src/actions/actions';
-import { getUserProgress, updateLevel } from '../src/actions/user-progress-actions';
+import { createGame } from '@/actions/game-actions';
+import { getUserProgress, updateUserProgress } from '@/actions/user-progress-actions';
 
 const sessionStore = InMemorySessionStore.instance;
 
@@ -33,7 +31,7 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
           throw new Error("User progress not found");
         }
 
-        userProgress = await updateLevel(session.userId, userProgress.level + 1);
+        userProgress = await updateUserProgress(session.userId, userProgress.level + 1);
 
         socket.emit("session", socket.data, userProgress);
       }
@@ -61,7 +59,7 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
       }
     });
 
-    socket.on('playProgressGame', async (callback: (data: InitialRoomData, roomId: string) => void) => {
+    socket.on('playProgressGame', async (callback: (data: InitialRoom, roomId: string) => void) => {
       const userProgress = await getUserProgress(socket.data.userId);
       if (!userProgress) throw new Error("User progress not found");
 
@@ -72,14 +70,14 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
 
       const initialRoomData = await joinToRoom(socket, roomId);
 
-      const player = initialRoomData.players.find((p: PlayerData) => p.userId === socket.data.userId);
+      const player = initialRoomData.players.find((p: Player) => p.userId === socket.data.userId);
       if (!player) throw new Error("Player not found");
 
       socket.to(roomId).emit("joinedRoom", player);
 
       await socket.join(roomId);
 
-      callback(initialRoomData as InitialRoomData, roomId);
+      callback(initialRoomData as InitialRoom, roomId);
     });
 
     socket.on('nextGame', async () => {
@@ -97,20 +95,18 @@ export const socketHandler = (io: Server<ClientToServerEvents, ServerToClientEve
       io.to(roomId).emit("nextGame", room);
     });
 
-    socket.on('joinRoom', async (roomId: string, callback: (data: InitialRoomData) => void) => {
-      console.log("itt");
+    socket.on('joinRoom', async (roomId: string, callback: (data: InitialRoom) => void) => {
       const initialRoomData = await joinToRoom(socket, roomId);
 
-      const player = initialRoomData.players.find((p: PlayerData) => p.userId === socket.data.userId);
+      const player = initialRoomData.players.find((p: Player) => p.userId === socket.data.userId);
 
-      console.log(player);
       if (!player) throw new Error("Player not found");
 
       socket.to(roomId).emit("joinedRoom", player);
 
       await socket.join(roomId);
 
-      callback(initialRoomData as InitialRoomData);
+      callback(initialRoomData as InitialRoom);
     });
 
     socket.on("setName", async (name: string) => {

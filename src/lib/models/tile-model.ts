@@ -1,5 +1,5 @@
-import { TileType } from "@/shared/types";
-import { QuestionDirection, QuestionType } from "../types/question-types";
+import { QuestionType, QuestionDirection } from "@/shared/types/question";
+import { TileType } from "@/shared/types/tile";
 
 export class TileModel {
   type: TileType;
@@ -15,5 +15,3 @@ export class TileModel {
     this.direction = direction;
   }
 }
-
-//public id: number, public type: TileType, public questionType?: QuestionType, public question?: string, public answer?: string, public direction?: QuestionDirection

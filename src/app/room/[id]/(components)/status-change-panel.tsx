@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MenuIcon } from "lucide-react";
-import { useRoomContext } from "@/lib/hooks/hooks";
+import { useRoomContext } from "@/lib/hooks/context-hooks";
 import { motion, useAnimation } from "framer-motion";
 import {
   Drawer,

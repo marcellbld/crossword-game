@@ -1,6 +1,6 @@
+import { QuestionDirection } from "@/shared/types/question";
+import { TileType } from "@/shared/types/tile";
 import { TileModel } from "@/lib/models/tile-model";
-import { QuestionDirection } from "@/lib/types/question-types";
-import { TileType } from "@/shared/types";
 import { useState } from "react";
 
 export const useCreatorTiles = () => {

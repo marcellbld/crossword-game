@@ -1,4 +1,4 @@
-import { QuestionDirection } from "./types/question-types";
+import { QuestionDirection } from "@/shared/types/question";
 
 export const calculateDirection = (direction: number | QuestionDirection): number => {
   switch (direction) {

@@ -1,4 +1,4 @@
-import { Session } from "../src/shared/types";
+import { Session } from "@/shared/types/session";
 
 export class InMemorySessionStore {
   static #instance: InMemorySessionStore;

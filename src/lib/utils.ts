@@ -9,7 +9,7 @@ export async function sleep(ms: number) {
   await new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export async function fetchSpecificGithubEmoji(emojiName: string):
+export async function fetchEmoji(emojiName: string):
   Promise<string | null> {
 
   try {
@@ -30,10 +30,8 @@ export async function fetchSpecificGithubEmoji(emojiName: string):
   }
 };
 
-export function shuffle(array: unknown[]) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}; 
+export function shuffleArray<T>(array: T[]): T[] {
+  return array.sort(() => 0.5 - Math.random());
+};
+
+export const ALPHABET = "abcdefghijklmnopqrstuvwxyz";

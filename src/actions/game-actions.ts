@@ -1,11 +1,11 @@
 "use server";
 
-import { createRoom, findAllBaseQuestions, updateRoom } from "../lib/server-utils";
-import { BaseQuestion, Room } from "@prisma/client";
+import { roomUtils } from "@/lib/server-utils";
+import { Room } from "@prisma/client";
 
 export async function createRandomGame(): Promise<Room | undefined> {
   try {
-    return await createRoom(Math.floor(Math.random() * 2), false);
+    return roomUtils.create(Math.floor(Math.random() * 2), false);
   } catch (e) {
     throw new Error("Failed to create random game");
   }
@@ -13,27 +13,15 @@ export async function createRandomGame(): Promise<Room | undefined> {
 
 export async function createGame(puzzleId: number, progressGame: boolean, playerCapacity: number): Promise<Room | undefined> {
   try {
-    return await createRoom(puzzleId, progressGame, playerCapacity);
+    return roomUtils.create(puzzleId, progressGame, playerCapacity);
   } catch (e) {
     throw new Error("Failed to create random game");
   }
 }
 
-export async function getBaseQuestions(maxLength: number, characters: string[], ignoreQuestions: number[]): Promise<BaseQuestion[]> {
-  try {
-    return await findAllBaseQuestions(maxLength, characters, ignoreQuestions);
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      console.error(e.message);
-    }
-
-    throw new Error("Failed to get base questions");
-  }
-}
-
 export async function nextRandomGame(roomId: string): Promise<Room | undefined> {
   try {
-    return await updateRoom(roomId, Math.floor(Math.random() * 2));
+    return roomUtils.update(roomId, Math.floor(Math.random() * 2));
   } catch (e: unknown) {
     if (e instanceof Error) {
       console.error(e.message);
@@ -43,10 +31,9 @@ export async function nextRandomGame(roomId: string): Promise<Room | undefined> 
   }
 }
 
-
 export async function nextProgressGame(roomId: string, puzzleId: number): Promise<Room | undefined> {
   try {
-    return await updateRoom(roomId, puzzleId);
+    return roomUtils.update(roomId, puzzleId);
   } catch (e: unknown) {
     if (e instanceof Error) {
       console.error(e.message);

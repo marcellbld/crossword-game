@@ -1,6 +1,6 @@
 import { BaseQuestion, Question, Tile } from "@prisma/client";
 
-export type Puzzle = {
+export type PuzzleData = {
   Tiles: {
     position: Tile["position"];
     type: Tile["type"];

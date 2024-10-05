@@ -1,11 +1,11 @@
 "use client";
 
-import GameBoardResponsiveWrapper from "@/components/board-responsive-wrapper";
+import GameBoardResponsiveWrapper from "@/components/board/board-responsive-wrapper";
 import GameBoard from "./(components)/game-board";
 import LetterSelectPanel from "./(components)/letter-select-panel";
 import PlayerInfoPanel from "./(components)/player-info-panel";
 import StatusChangePanel from "./(components)/status-change-panel";
-import { usePuzzleContext, useSocketContext } from "@/lib/hooks/hooks";
+import { usePuzzleContext, useSocketContext } from "@/lib/hooks/context-hooks";
 import { useRoomId } from "@/lib/hooks/use-room-id";
 import { useEffect, useState } from "react";
 import Confetti from "@/components/animations/confetti";

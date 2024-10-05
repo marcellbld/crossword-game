@@ -1,6 +1,6 @@
 "use client";
 
-import { useSocketContext } from "@/lib/hooks/hooks";
+import { useSocketContext } from "@/lib/hooks/context-hooks";
 import { Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import GamesPanel from "./(components)/games-panel";

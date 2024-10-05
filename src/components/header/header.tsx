@@ -1,11 +1,11 @@
 "use client";
 
-import { useSocketContext } from "@/lib/hooks/hooks";
+import { useState } from "react";
 import { Loader } from "lucide-react";
 import { BsPersonFill } from "react-icons/bs";
+import { useSocketContext } from "@/lib/hooks/context-hooks";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { useState } from "react";
 import SocketInfoPopoverContent from "./(components)/socket-info-popover-content";
 
 export default function Header() {

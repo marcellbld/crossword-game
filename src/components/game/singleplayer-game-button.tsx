@@ -1,21 +1,22 @@
-import { DicesIcon, Loader } from "lucide-react";
 import React, { useState } from "react";
-import { Button } from "./ui/button";
-import { createRandomGame } from "@/actions/actions";
+import { Loader, PlayIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Room } from "@prisma/client";
+import { useSocketContext } from "@/lib/hooks/context-hooks";
+import { Button } from "../ui/button";
 
-export default function RandomGameButton() {
+export default function SingleplayerGameButton() {
   const [pending, setPending] = useState(false);
   const router = useRouter();
+
+  const { playProgressGame } = useSocketContext();
 
   const handleClick = async () => {
     setPending(true);
 
-    await createRandomGame()
-      .then((room: Room | undefined) => {
-        if (room) {
-          router.push(`/room/${room.id}`);
+    await playProgressGame()
+      .then((roomId: string) => {
+        if (roomId) {
+          router.push(`/room/${roomId}`);
         }
       })
       .catch(() => {
@@ -29,13 +30,12 @@ export default function RandomGameButton() {
       onClick={() => handleClick()}
       size="lg"
       className="h-16"
-      variant="secondary"
     >
       {pending && <Loader className="animate-spin" />}
       {!pending && (
         <div className="flex flex-col justify-center items-center gap-1">
-          <DicesIcon />
-          <span>Random</span>
+          <PlayIcon />
+          <span>Play</span>
         </div>
       )}
     </Button>

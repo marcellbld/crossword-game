@@ -1,21 +1,23 @@
-import { LetterOption, TileLetter, TileType } from "../src/shared/types";
-import { Puzzle } from "../src/lib/types/puzzle-types";
-import { calculateDirection } from "../src/lib/game-utils";
+import { TileLetterOption, TileLetter, TileType } from "@/shared/types/tile";
+import { PuzzleData } from "@/shared/types/puzzle";
+import { calculateDirection } from "@/lib/game-utils";
+import { ALPHABET, shuffleArray } from "@/lib/utils";
 
-const LETTERS = "abcdefghijklmnopqrstuvwxyz";
-export const calculateLetterOptions = (letter: string): LetterOption[] => {
+function getShuffledLetters(ignoredLetter: string): string[] {
+  return shuffleArray([...ALPHABET.split("")].filter(l => l !== ignoredLetter));
+}
 
-  const shuffledLetters = [...LETTERS.split("")].filter(l => l !== letter).sort(() => 0.5 - Math.random());
-  const letters = [letter, ...shuffledLetters.slice(0, 5)].sort(() => 0.5 - Math.random());
+export const calculateLetterOptions = (letter: string): TileLetterOption[] => {
+  const shuffledLetters = getShuffledLetters(letter);
+  const letters = shuffleArray([letter, ...shuffledLetters.slice(0, 5)]);
 
   return letters.map(l => ({ letter: l, selected: false }));
 }
 
-export const calculatePuzzle = (puzzle: Puzzle): Map<number, TileLetter> => {
+export const calculatePuzzle = (puzzle: PuzzleData): Map<number, TileLetter> => {
   const map: Map<number, TileLetter> = new Map();
 
   puzzle.Tiles.forEach(tile => {
-
     if (tile.type === TileType.Question) {
       tile.Questions.forEach(question => {
         const dir = calculateDirection(question.direction);

@@ -1,6 +1,6 @@
-import { useSocketContext } from "@/lib/hooks/hooks";
-import { Button } from "./ui/button";
 import { PlayIcon } from "lucide-react";
+import { useSocketContext } from "@/lib/hooks/context-hooks";
+import { Button } from "../ui/button";
 
 export default function NextGameButton() {
   const { nextGame } = useSocketContext();

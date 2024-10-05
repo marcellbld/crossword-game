@@ -1,4 +1,4 @@
-import { QuestionDirection } from "@/lib/types/question-types";
+import { QuestionDirection } from "@/shared/types/question";
 import { BaseQuestion } from "@prisma/client";
 import { useState } from "react";
 

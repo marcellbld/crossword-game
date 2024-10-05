@@ -1,14 +1,11 @@
 "use server";
 
-import {
-  findUserProgress, createUserProgress as createUserProgressDb,
-  updateUserProgress
-} from "../lib/server-utils";
 import { UserProgress } from "@prisma/client";
+import { userProgressUtils } from "@/lib/server-utils";
 
 export async function createUserProgress(userId: string): Promise<UserProgress | null> {
   try {
-    return await createUserProgressDb(userId);
+    return userProgressUtils.create(userId);
   } catch (e: unknown) {
     if (e instanceof Error) {
       console.error(e.message);
@@ -19,7 +16,7 @@ export async function createUserProgress(userId: string): Promise<UserProgress |
 
 export async function getUserProgress(userId: string): Promise<UserProgress | null> {
   try {
-    return await findUserProgress(userId);
+    return userProgressUtils.findByUserId(userId);
   } catch (e: unknown) {
     if (e instanceof Error) {
       console.error(e.message);
@@ -29,9 +26,9 @@ export async function getUserProgress(userId: string): Promise<UserProgress | nu
   }
 }
 
-export async function updateLevel(userId: string, level: number): Promise<UserProgress | null> {
+export async function updateUserProgress(userId: string, level: number): Promise<UserProgress | null> {
   try {
-    return await updateUserProgress(userId, level);
+    return userProgressUtils.update(userId, level);
   } catch (e: unknown) {
     if (e instanceof Error) {
       console.error(e.message);

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "ts-node server/server.ts",
+    "dev": "ts-node -r tsconfig-paths/register server/server.ts",
     "build": "next build",
     "start": "NODE_ENV=production npx prisma migrate deploy && ts-node server/server.ts",
     "lint": "next lint"
@@ -45,6 +45,7 @@
     "prisma": "^5.19.1",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5"
   }
 }

@@ -1,10 +1,10 @@
+import { FormEvent, useState } from "react";
+import { ZapIcon, Edit, Save, XIcon } from "lucide-react";
+import { Separator } from "@radix-ui/react-separator";
+import { useSocketContext } from "@/lib/hooks/context-hooks";
+import { useRoomId } from "@/lib/hooks/use-room-id";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useSocketContext } from "@/lib/hooks/hooks";
-import { useRoomId } from "@/lib/hooks/use-room-id";
-import { Separator } from "@radix-ui/react-separator";
-import { ZapIcon, Edit, Save, XIcon } from "lucide-react";
-import { FormEvent, useState } from "react";
 
 export default function SocketInfoPopoverContent() {
   const { name, setName } = useSocketContext();

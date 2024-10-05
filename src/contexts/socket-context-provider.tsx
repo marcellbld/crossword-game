@@ -2,12 +2,10 @@
 
 import { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import {
-  InitialRoomData,
-  ClientSocket as Socket,
-  SocketData,
-} from "../shared/types";
-import { usePuzzleContext, useRoomContext } from "@/lib/hooks/hooks";
+import { InitialRoom } from "@/shared/types/room";
+import { ClientSocket as Socket } from "@/shared/types/socket";
+import { SocketData } from "@/shared/types/socket";
+import { usePuzzleContext, useRoomContext } from "@/lib/hooks/context-hooks";
 import { UserProgress } from "@prisma/client";
 
 type TSocketContext = {
@@ -49,8 +47,6 @@ export default function SocketContextProvider({
       socket.auth = { sessionId };
     }
 
-    // socket.connect();
-
     socket.on("connect", () => {
       console.log("CONNECTED");
       console.log(socket);
@@ -90,7 +86,7 @@ export default function SocketContextProvider({
     socket.on("completedGame", () => {
       setCompleted(true);
     });
-    socket.on("nextGame", (data: InitialRoomData) => {
+    socket.on("nextGame", (data: InitialRoom) => {
       setCompleted(false);
       receiveInitialData(data);
     });
@@ -106,17 +102,15 @@ export default function SocketContextProvider({
       socket.off("completedGame");
       socket.off("nextGame");
     };
-  }, []);
+  });
 
-  const receiveInitialData = (data: InitialRoomData) => {
+  const receiveInitialData = (data: InitialRoom) => {
     setupInitials(data);
     setPlayers(data.players || []);
   };
 
   const joinRoom = (roomId: string) => {
-    if (!socket) return;
-
-    socket.emit("joinRoom", roomId, (data: InitialRoomData) => {
+    socket?.emit("joinRoom", roomId, (data: InitialRoom) => {
       receiveInitialData(data);
     });
   };
@@ -141,10 +135,11 @@ export default function SocketContextProvider({
         .timeout(10000)
         .emit(
           "playProgressGame",
-          (err: unknown, data: InitialRoomData, roomId: string) => {
+          (err: unknown, data: InitialRoom, roomId: string) => {
             if (err && err instanceof Error) {
               reject(err.message);
             }
+
             receiveInitialData(data);
             resolve(roomId);
           }

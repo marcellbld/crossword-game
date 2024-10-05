@@ -1,5 +1,5 @@
-import Board from "@/components/board";
-import { useCreatorContext } from "@/lib/hooks/hooks";
+import Board from "@/components/board/board";
+import { useCreatorContext } from "@/lib/hooks/context-hooks";
 import React from "react";
 
 export default function CreatorGameBoard() {

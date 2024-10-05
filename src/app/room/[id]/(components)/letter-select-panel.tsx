@@ -1,4 +1,4 @@
-import { usePuzzleContext, useSocketContext } from "@/lib/hooks/hooks";
+import { usePuzzleContext, useSocketContext } from "@/lib/hooks/context-hooks";
 import { LetterOption } from "@/shared/types";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";

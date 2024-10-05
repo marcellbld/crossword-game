@@ -2,14 +2,14 @@
 
 import { calculateDirection } from "@/lib/game-utils";
 import { TileModel } from "@/lib/models/tile-model";
-import { TileType } from "@/shared/types";
-import { InitialRoomData } from "@/shared/types";
+import { TileType } from "@/shared/types/tile";
+import { InitialRoom } from "@/shared/types/room";
 import { createContext, useState } from "react";
 
 type TPuzzleContext = {
   tiles: TileModel[] | null;
-  letterOptions: InitialRoomData["letterOptions"] | null;
-  progressBoard: InitialRoomData["progressBoard"] | null;
+  letterOptions: InitialRoom["letterOptions"] | null;
+  progressBoard: InitialRoom["progressBoard"] | null;
   selectedTileId: number[] | null;
   setSelectedTileId: (id: number[] | null) => void;
   getSelectedTiles: () => number[];
@@ -20,10 +20,7 @@ type TPuzzleContext = {
     success: boolean
   ) => void;
   setupInitials: (
-    data: Pick<
-      InitialRoomData,
-      "basePuzzle" | "letterOptions" | "progressBoard"
-    >
+    data: Pick<InitialRoom, "basePuzzle" | "letterOptions" | "progressBoard">
   ) => void;
   isCompleted: boolean;
   setCompleted: (completed: boolean) => void;
@@ -37,16 +34,13 @@ export default function PuzzleContextProvider({
   children: React.ReactNode;
 }) {
   const [letterOptions, setLetterOptions] = useState<
-    InitialRoomData["letterOptions"] | null
+    InitialRoom["letterOptions"] | null
   >(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [progressBoard, setProgressBoard] = useState<
-    InitialRoomData["progressBoard"] | null
+    InitialRoom["progressBoard"] | null
   >(null);
-  //const [basePuzzle, setBasePuzzle] = useState(initialData.basePuzzle);
 
   const [tiles, setTiles] = useState<TileModel[] | null>(null);
-  // setupInitials(initialData.basePuzzle, initialData.progressBoard)
 
   const [selectedTileId, setSelectedTileId] = useState<number[] | null>(null);
 
@@ -56,21 +50,19 @@ export default function PuzzleContextProvider({
     let selectedTiles: number[] = [];
     if (selectedTileId !== null && tiles != null) {
       const tile = tiles[selectedTileId[0]];
-      if (tile.type !== TileType.Empty) {
+
+      if (tile.type === TileType.Question) {
         selectedTiles = [selectedTileId[0]];
+        const dir = calculateDirection(tile.direction![selectedTileId[1]]);
 
-        if (tile.type === TileType.Question) {
-          const dir = calculateDirection(tile.direction![selectedTileId[1]]);
-
-          let nextId = selectedTileId[0] + dir;
-          while (
-            nextId >= 0 &&
-            nextId < tiles.length &&
-            tiles[nextId].type === TileType.Simple
-          ) {
-            selectedTiles.push(nextId);
-            nextId += dir;
-          }
+        let nextId = selectedTileId[0] + dir;
+        while (
+          nextId >= 0 &&
+          nextId < tiles.length &&
+          tiles[nextId].type === TileType.Simple
+        ) {
+          selectedTiles.push(nextId);
+          nextId += dir;
         }
       }
     }
@@ -83,7 +75,7 @@ export default function PuzzleContextProvider({
     letterOptions,
     progressBoard,
   }: Pick<
-    InitialRoomData,
+    InitialRoom,
     "basePuzzle" | "letterOptions" | "progressBoard"
   >): void => {
     setLetterOptions(() => letterOptions);

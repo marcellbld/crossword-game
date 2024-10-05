@@ -1,7 +1,7 @@
-import RandomGameButton from "@/components/random-game-button";
-import SingleplayerGameButton from "@/components/singleplayer-game-button";
+import RandomGameButton from "@/components/game/random-game-button";
+import SingleplayerGameButton from "@/components/game/singleplayer-game-button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { useSocketContext } from "@/lib/hooks/hooks";
+import { useSocketContext } from "@/lib/hooks/context-hooks";
 import { Separator } from "@radix-ui/react-separator";
 import Image from "next/image";
 

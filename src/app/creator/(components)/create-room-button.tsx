@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useCreatorContext } from "@/lib/hooks/hooks";
+import { useCreatorContext } from "@/lib/hooks/context-hooks";
 import { useEffect, useState } from "react";
 
 export default function CreateRoomButton() {

@@ -1,4 +1,4 @@
-import { useCreatorContext } from "@/lib/hooks/hooks";
+import { useCreatorContext } from "@/lib/hooks/context-hooks";
 import CreatorGameBoard from "./creator-game-board";
 import { TileType } from "@/shared/types";
 import { Button } from "@/components/ui/button";
