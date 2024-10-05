@@ -24,7 +24,7 @@ export default function TileEmoji({ emojiName }: { emojiName: string }) {
           height={50}
           alt={emojiName || "emoji"}
           src={emojiUrl}
-          className="size-[1.5rem] sm:size-[3rem]"
+          className="size-[0.8rem] sm:size-[1.5rem]"
         />
       )}
     </>

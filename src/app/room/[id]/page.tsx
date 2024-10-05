@@ -10,6 +10,7 @@ import { useRoomId } from "@/lib/hooks/use-room-id";
 import { useEffect, useState } from "react";
 import Confetti from "@/components/animations/confetti";
 import GameOverPanel from "./(components)/game-over-panel";
+import RoomInfoPanel from "./(components)/room-info-panel";
 
 export default function RoomIdPage() {
   const { joinRoom, id } = useSocketContext();
@@ -52,7 +53,14 @@ export default function RoomIdPage() {
         {initialized && (
           <GameBoardResponsiveWrapper>
             <div className="bg-board-background shadow shadow-slate-500 border border-slate-700/25 p-2 rounded-[3rem] flex flex-col gap-3">
-              <PlayerInfoPanel />
+              <div className="flex items-center px-4">
+                <div className="flex flex-1 justify-center items-center">
+                  <PlayerInfoPanel />
+                </div>
+                <div className="ml-auto">
+                  <RoomInfoPanel />
+                </div>
+              </div>
               <div className="border-2 border-[#4b3a2b] bg-board rounded-lg shadow-md shadow-slate-700">
                 <GameBoard />
               </div>

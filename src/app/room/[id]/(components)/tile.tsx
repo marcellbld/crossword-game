@@ -122,12 +122,12 @@ function createQuestion(tileModel: TileModel, questionNumber: number = 0) {
   return (
     <div
       className="text-question uppercase font-bold leading-tight select-none cursor-none pointer-events-none
-       text-[0.475rem] sm:text-xs md:text-sm"
+       text-[0.445rem] md:text-[0.8rem]"
     >
       {questionType === QuestionType.Text && content}
       {questionType === QuestionType.Color && (
         <BsCircleFill
-          className="size-[0.5rem] sm:size-[1.5rem]"
+          className="size-[0.75rem] sm:size-[1.5rem]"
           color={content}
         ></BsCircleFill>
       )}

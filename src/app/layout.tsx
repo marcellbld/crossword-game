@@ -5,6 +5,7 @@ import SocketContextProvider from "@/contexts/socket-context-provider";
 import RoomContextProvider from "@/contexts/room-context-provider";
 import PuzzleContextProvider from "@/contexts/puzzle-context-provider";
 import Header from "@/components/header/header";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -42,6 +43,7 @@ export default function RootLayout({
             </SocketContextProvider>
           </RoomContextProvider>
         </PuzzleContextProvider>
+        <Toaster />
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { Player } from "@/shared/types/player";
+import { RoomData } from "@/shared/types/room";
 import { createContext, useState } from "react";
 
 type TRoomContext = {
@@ -9,6 +10,8 @@ type TRoomContext = {
   addPlayer: (player: Player) => void;
   removePlayer: (userId: string) => void;
   addScore: (userId: string, score: number) => void;
+  roomData: RoomData | null;
+  setRoomData: (roomData: RoomData) => void;
 };
 
 export const RoomContext = createContext<TRoomContext | null>(null);
@@ -21,6 +24,7 @@ export default function RoomContextProvider({
   children,
 }: RoomContextProviderProps) {
   const [players, setPlayers] = useState<TRoomContext["players"]>([]);
+  const [roomData, setRoomData] = useState<TRoomContext["roomData"]>(null);
 
   const addPlayer = (player: Player) => {
     setPlayers(prev => [...prev, player]);
@@ -43,7 +47,15 @@ export default function RoomContextProvider({
 
   return (
     <RoomContext.Provider
-      value={{ players, setPlayers, addPlayer, removePlayer, addScore }}
+      value={{
+        players,
+        setPlayers,
+        addPlayer,
+        removePlayer,
+        addScore,
+        roomData,
+        setRoomData,
+      }}
     >
       {children}
     </RoomContext.Provider>

@@ -45,7 +45,7 @@ async function main() {
 
   // Base Questions
   const bqFile = await fs.readFile(
-    process.cwd() + "./base-questions.json",
+    process.cwd() + "/prisma/base-questions.json",
     "utf8"
   );
   const bqData = JSON.parse(bqFile);
@@ -63,7 +63,7 @@ async function main() {
 
   // Boards
   const file = await fs.readFile(
-    process.cwd() + "./board-example.json",
+    process.cwd() + "/prisma/board-example.json",
     "utf8"
   );
   const data = JSON.parse(file);

@@ -48,11 +48,12 @@ export default function PuzzleContextProvider({
 
   const getSelectedTiles = () => {
     let selectedTiles: number[] = [];
+
     if (selectedTileId !== null && tiles != null) {
       const tile = tiles[selectedTileId[0]];
+      selectedTiles = [selectedTileId[0]];
 
       if (tile.type === TileType.Question) {
-        selectedTiles = [selectedTileId[0]];
         const dir = calculateDirection(tile.direction![selectedTileId[1]]);
 
         let nextId = selectedTileId[0] + dir;

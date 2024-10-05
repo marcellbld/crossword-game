@@ -20,7 +20,7 @@ export default function Home() {
     <div className="h-full flex justify-center items-center">
       {connecting && <Loader className="animate-spin" />}
       {!connecting && (
-        <div className="flex flex-col items-center">
+        <div className="w-screen md:w-[720px] max-w-2xl mx-auto flex flex-col items-center">
           <GamesPanel />
           <Button className="mt-4 self-end rounded-3xl" asChild>
             <Link href="/creator">Custom Crossword</Link>

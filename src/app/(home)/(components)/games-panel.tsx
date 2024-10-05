@@ -11,7 +11,7 @@ export default function GamesPanel() {
   const userLevel: number | undefined = userProgress?.level;
 
   return (
-    <Card className="w-[500px] rounded-3xl">
+    <Card className="w-full rounded-3xl">
       <CardHeader>
         <CardTitle>Games</CardTitle>
       </CardHeader>

@@ -29,7 +29,8 @@ export default function SocketContextProvider({
   const [socket, setSocket] = useState<Socket | null>(null);
   const [socketData, setSocketData] = useState<SocketData | null>(null);
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
-  const { addPlayer, removePlayer, addScore, setPlayers } = useRoomContext();
+  const { addPlayer, removePlayer, addScore, setPlayers, setRoomData } =
+    useRoomContext();
   const {
     setLetter: setPuzzleLetter,
     setupInitials,
@@ -106,6 +107,7 @@ export default function SocketContextProvider({
 
   const receiveInitialData = (data: InitialRoom) => {
     setupInitials(data);
+    setRoomData(data);
     setPlayers(data.players || []);
   };
 

@@ -7,6 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import { useCreatorContext } from "@/lib/hooks/context-hooks";
 import { QuestionDirection } from "@/shared/types/question";
 import { TileType } from "@/shared/types/tile";
@@ -15,6 +16,7 @@ import { useState } from "react";
 export default function ExportJsonButton() {
   const { tiles, questionTemplates } = useCreatorContext();
   const [json, setJson] = useState<string>("");
+  const { toast } = useToast();
 
   const createJson = () => {
     const modifiedArray = questionTemplates
@@ -48,6 +50,12 @@ export default function ExportJsonButton() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(json);
+
+    toast({
+      title: "Success",
+      description: "JSON copied to clipboard.",
+      variant: "success",
+    });
   };
 
   return (
