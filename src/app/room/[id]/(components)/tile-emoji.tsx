@@ -1,18 +1,18 @@
-import { fetchSpecificGithubEmoji } from "@/lib/utils";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import { fetchEmoji } from "@/lib/utils";
 
 export default function TileEmoji({ emojiName }: { emojiName: string }) {
   const [emojiUrl, setEmojiUrl] = useState<string>("");
 
   useEffect(() => {
-    const fetchEmoji = async () => {
-      const emoji = await fetchSpecificGithubEmoji(emojiName);
+    const loadEmoji = async () => {
+      const emoji = await fetchEmoji(emojiName);
 
       if (emoji) setEmojiUrl(emoji);
     };
 
-    fetchEmoji();
+    loadEmoji();
   }, [emojiName]);
 
   return (

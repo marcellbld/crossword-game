@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useRoomContext } from "@/lib/hooks/context-hooks";
+import { cn, fetchEmoji } from "@/lib/utils";
 import NextGameButton from "@/components/game/next-game-button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { useRoomContext } from "@/lib/hooks/context-hooks";
-import { cn, fetchSpecificGithubEmoji } from "@/lib/utils";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 
 export default function GameOverPanel({ className }: { className?: string }) {
   const { players } = useRoomContext();
@@ -12,8 +12,8 @@ export default function GameOverPanel({ className }: { className?: string }) {
   useEffect(() => {
     const fetchImages = async () => {
       const images = await Promise.all([
-        fetchSpecificGithubEmoji("1st_place_medal"),
-        fetchSpecificGithubEmoji("2nd_place_medal"),
+        fetchEmoji("1st_place_medal"),
+        fetchEmoji("2nd_place_medal"),
       ]);
 
       setImages(images);
