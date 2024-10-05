@@ -1,6 +1,6 @@
 import Board from "@/components/board/board";
 import { usePuzzleContext, useRoomContext } from "@/lib/hooks/context-hooks";
-import { TileType } from "@/shared/types";
+import { TileType } from "@/shared/types/tile";
 
 export default function GameBoard() {
   const {

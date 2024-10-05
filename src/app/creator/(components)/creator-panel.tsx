@@ -1,16 +1,16 @@
 import { useCreatorContext } from "@/lib/hooks/context-hooks";
 import CreatorGameBoard from "./creator-game-board";
-import { TileType } from "@/shared/types";
+import { TileType } from "@/shared/types/tile";
+import { QuestionDirection } from "@/shared/types/question";
 import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { BaseQuestion } from "@prisma/client";
 import { calculateDirection } from "@/lib/game-utils";
-import { QuestionDirection } from "@/lib/types/question-types";
 import CreatorControls from "./creator-controls";
 import ExportJsonButton from "./export-json-button";
 import CreateRoomButton from "./create-room-button";
-import { shuffle } from "@/lib/utils";
+import { shuffleArray } from "@/lib/utils";
 
 export default function CreatorPanel() {
   const {
@@ -35,7 +35,7 @@ export default function CreatorPanel() {
   }
 
   const filterQuestions = () => {
-    return (shuffle(baseQuestions) as BaseQuestion[]).slice(0, 9);
+    return (shuffleArray(baseQuestions) as BaseQuestion[]).slice(0, 9);
   };
 
   const selectQuestion = (question: BaseQuestion) => {
@@ -211,95 +211,6 @@ export default function CreatorPanel() {
               ))}
           </div>
         )}
-      {/* {tile &&
-        (tile.type === TileType.Empty ||
-          (tile.type === TileType.Question &&
-            tiles &&
-            selectedTileId &&
-            !tiles[selectedTileId[0]].content![selectedTileId[1]])) && (
-          <div className="flex gap-2 justify-center items-center">
-            <div className="font-semibold">Create Question</div>
-            {
-              <Button
-                disabled={selectedDirection === QuestionDirection.Right}
-                className="rounded-full"
-                size="smIcon"
-                onClick={() => setSelectedDirection(QuestionDirection.Right)}
-              >
-                <ChevronRight />
-              </Button>
-            }
-            <Button
-              disabled={selectedDirection === QuestionDirection.Bottom}
-              className="rounded-full"
-              size="smIcon"
-              onClick={() => setSelectedDirection(QuestionDirection.Bottom)}
-            >
-              <ChevronDown />
-            </Button>
-
-            <Button
-              className="rounded-full"
-              size="smIcon"
-              variant="destructive"
-              onClick={() => deleteQuestion()}
-            >
-              <Trash2 />
-            </Button>
-          </div>
-        )}
-      {selectedTileId &&
-        getEmptyQuestionDirection(selectedTileId[0]) !== null && (
-          <div className="flex gap-2 justify-center items-center">
-            <Button onClick={() => addSecondQuestion()}>Add Question</Button>
-            <Button
-              className="rounded-full"
-              size="smIcon"
-              variant="destructive"
-              onClick={() => deleteQuestion()}
-            >
-              <Trash2 />
-            </Button>
-          </div>
-        )}
-
-      {selectedTileId &&
-        tiles &&
-        tiles[selectedTileId[0]].type === TileType.Question &&
-        getEmptyQuestionDirection(selectedTileId[0]) === null &&
-        tiles[selectedTileId[0]].content![selectedTileId[1]] !== "" && (
-          <div className="flex gap-2 justify-center items-center">
-            <Button
-              className="rounded-full"
-              size="smIcon"
-              variant="destructive"
-              onClick={() => deleteQuestion()}
-            >
-              <Trash2 />
-            </Button>
-          </div>
-        )}
-      {selectedDirection &&
-        selectedTileId &&
-        tiles &&
-        (tiles[selectedTileId[0]].type === TileType.Empty ||
-          (tiles[selectedTileId[0]].type === TileType.Question &&
-            tiles[selectedTileId[0]].content![selectedTileId[1]] === "")) && (
-          <div className="grid grid-cols-3 gap-3 px-5">
-            {fetchingBaseQuestions && <Loader className="animate-spin" />}
-            {!fetchingBaseQuestions &&
-              filterQuestions().map(question => (
-                <Button
-                  key={question.id}
-                  size="lg"
-                  className="rounded-3xl"
-                  onClick={() => selectQuestion(question)}
-                >
-                  {question.answer}
-                </Button>
-              ))}
-          </div>
-        )} */}
     </div>
   );
 }

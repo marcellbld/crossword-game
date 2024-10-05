@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useCreatorContext } from "@/lib/hooks/context-hooks";
-import { QuestionDirection } from "@/lib/types/question-types";
-import { TileType } from "@/shared/types";
+import { QuestionDirection } from "@/shared/types/question";
+import { TileType } from "@/shared/types/tile";
 import { useState } from "react";
 
 export default function ExportJsonButton() {
