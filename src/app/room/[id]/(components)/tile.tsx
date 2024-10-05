@@ -2,8 +2,9 @@ import { TileModel } from "@/lib/models/tile-model";
 import { cn } from "@/lib/utils";
 import React from "react";
 import TileContent from "./tile-content";
-import { QuestionDirection, QuestionType } from "@/lib/types/question-types";
-import { PLAYER_COLORS, PlayerData, TileType } from "@/shared/types";
+import { QuestionDirection, QuestionType } from "@/shared/types/question";
+import { PLAYER_COLORS, Player } from "@/shared/types/player";
+import { TileType } from "@/shared/types/tile";
 import { BsCircleFill, BsTriangleFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 import TileEmoji from "./tile-emoji";
@@ -19,7 +20,7 @@ export default function Tile({
   index: number;
   tileModel: TileModel;
   className?: string;
-  solvedBy?: PlayerData | null;
+  solvedBy?: Player | null;
   isSelected: (index: number, itemId: number, tileType: TileType) => boolean;
   handleClick: (index: number, itemId: number) => void;
 }) {
