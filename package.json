@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "ts-node -r tsconfig-paths/register server/server.ts",
     "build": "next build",
-    "start": "NODE_ENV=production npx prisma migrate reset && ts-node -r tsconfig-paths/register server/server.ts",
+    "start": "NODE_ENV=production npx prisma migrate deploy && ts-node -r tsconfig-paths/register server/server.ts",
     "lint": "next lint"
   },
   "prisma": {
