@@ -1,3 +1,4 @@
+import { createPuzzle } from "@/actions/puzzle-actions";
 import { PrismaClient } from "@prisma/client";
 import { promises as fs } from "fs";
 
@@ -16,29 +17,6 @@ function convertToQuestionType(type: string) {
   }
 }
 
-function convertToTileType(type: string) {
-  switch (type) {
-    case "simple":
-      return 0
-    case "question":
-      return 1;
-    case "empty":
-      return 2;
-    default:
-      return 0;
-  }
-}
-
-function convertToDirectionType(type: string) {
-  switch (type) {
-    case "right":
-      return 1;
-    case "bottom":
-      return 2;
-    default:
-      return 1;
-  }
-}
 
 async function main() {
   console.log(`Start seeding ...`);
@@ -69,36 +47,10 @@ async function main() {
   const data = JSON.parse(file);
 
   for (const board of data) {
-    await prisma.puzzle.create({
-      data: {
-        id: board.id,
-      },
-    });
-
-    for (const tile of board.tiles) {
-      const createdTile = await prisma.tile.create({
-        data: {
-          type: convertToTileType(tile.type),
-          position: tile.position,
-          puzzleId: board.id
-        },
-      });
-
-      if (tile.type === "question") {
-        for (const question of tile.questions) {
-          await prisma.question.create({
-            data: {
-              direction: convertToDirectionType(question.direction),
-              baseQuestionId: question.baseQuestion,
-              tileId: createdTile.id
-            }
-          });
-        }
-      }
-    }
-
-    console.log(`Seeding finished.`);
+    await createPuzzle(board);
   }
+
+  console.log(`Seeding finished.`);
 }
 
 main()

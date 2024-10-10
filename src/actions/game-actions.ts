@@ -5,7 +5,7 @@ import { Room } from "@prisma/client";
 
 export async function createRandomGame(): Promise<Room | undefined> {
   try {
-    return roomUtils.create(Math.floor(Math.random() * 2), false);
+    return roomUtils.create(Math.floor(Math.random() * 2) + 1, false);
   } catch (e) {
     throw new Error("Failed to create random game");
   }
@@ -21,7 +21,7 @@ export async function createGame(puzzleId: number, progressGame: boolean, player
 
 export async function nextRandomGame(roomId: string): Promise<Room | undefined> {
   try {
-    return roomUtils.update(roomId, Math.floor(Math.random() * 2));
+    return roomUtils.update(roomId, Math.floor(Math.random() * 2) + 1);
   } catch (e: unknown) {
     if (e instanceof Error) {
       console.error(e.message);

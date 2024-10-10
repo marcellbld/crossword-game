@@ -19,7 +19,7 @@ model Room {
 }
 
 model Puzzle {
-  id        Int                @id
+  id        Int                @id @default(autoincrement())
   Tiles     Tile[]
   Games     Room[]
 }
@@ -53,5 +53,5 @@ model BaseQuestion {
 
 model UserProgress {
   userId          String       @id
-  level           Int          @default(0)
+  level           Int          @default(1)
 }

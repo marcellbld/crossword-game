@@ -1,15 +1,15 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useCreatorContext } from "@/lib/hooks/context-hooks";
-import { useEffect, useState } from "react";
 
 export default function CreateRoomButton() {
-  const { questionTemplates } = useCreatorContext();
+  const { questionTemplates, createGame } = useCreatorContext();
+  const router = useRouter();
 
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(questionTemplates);
-
     if (
       questionTemplates.filter(qtArr => qtArr.filter(qt => qt).length > 0)
         .length === 0
@@ -20,8 +20,28 @@ export default function CreateRoomButton() {
     }
   }, [questionTemplates]);
 
+  const handleClick = () => {
+    if (!disabled) {
+      setDisabled(true);
+      createGame()
+        .then(room => {
+          if (!room) throw new Error("Failed to create room");
+
+          router.push(`/room/${room.id}`);
+        })
+        .catch(() => {
+          setDisabled(false);
+        });
+    }
+  };
+
   return (
-    <Button className="rounded-full" size="sm" disabled={disabled}>
+    <Button
+      className="rounded-full"
+      size="sm"
+      disabled={disabled}
+      onClick={() => handleClick()}
+    >
       Create Room
     </Button>
   );

@@ -9,43 +9,15 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useCreatorContext } from "@/lib/hooks/context-hooks";
-import { QuestionDirection } from "@/shared/types/question";
-import { TileType } from "@/shared/types/tile";
 import { useState } from "react";
 
 export default function ExportJsonButton() {
-  const { tiles, questionTemplates } = useCreatorContext();
+  const { createJson } = useCreatorContext();
   const [json, setJson] = useState<string>("");
   const { toast } = useToast();
 
-  const createJson = () => {
-    const modifiedArray = questionTemplates
-      .map((row, i) => {
-        if (tiles![i].type === TileType.Simple) return undefined;
-
-        const modifiedRow = row?.filter(qt => qt);
-
-        return {
-          position: i,
-          type: modifiedRow.length === 0 ? "empty" : "question",
-          questions:
-            modifiedRow.length === 0
-              ? undefined
-              : row.map(qt =>
-                  qt === undefined || qt === null
-                    ? undefined
-                    : {
-                        direction:
-                          qt.direction === QuestionDirection.Right
-                            ? "right"
-                            : "bottom",
-                        baseQuestion: qt.baseQuestion.id,
-                      }
-                ),
-        };
-      })
-      .filter(item => item);
-    setJson(JSON.stringify(modifiedArray, null, 2));
+  const handleOpen = async () => {
+    setJson(await createJson());
   };
 
   const copyToClipboard = () => {
@@ -59,7 +31,7 @@ export default function ExportJsonButton() {
   };
 
   return (
-    <Dialog onOpenChange={() => createJson()}>
+    <Dialog onOpenChange={() => handleOpen()}>
       <DialogTrigger asChild>
         <Button size="sm" className="rounded-full">
           Export JSON
