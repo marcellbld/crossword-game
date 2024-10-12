@@ -8,10 +8,6 @@ export function useWindowSize() {
 
   useEffect(() => {
     function handleResize() {
-      console.log("set resize");
-
-      console.log(window.document.documentElement.clientWidth);
-
       setWindowSize({
         width: window.document.documentElement.clientWidth,
         height: window.innerHeight,

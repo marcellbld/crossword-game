@@ -2,13 +2,15 @@
 CREATE TABLE "Room" (
     "id" TEXT NOT NULL,
     "puzzleId" INTEGER NOT NULL,
+    "playerCapacity" INTEGER NOT NULL,
+    "progressGame" BOOLEAN NOT NULL,
 
     CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Puzzle" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
 
     CONSTRAINT "Puzzle_pkey" PRIMARY KEY ("id")
 );
@@ -41,6 +43,14 @@ CREATE TABLE "BaseQuestion" (
     "answer" TEXT NOT NULL,
 
     CONSTRAINT "BaseQuestion_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserProgress" (
+    "userId" TEXT NOT NULL,
+    "level" INTEGER NOT NULL DEFAULT 1,
+
+    CONSTRAINT "UserProgress_pkey" PRIMARY KEY ("userId")
 );
 
 -- AddForeignKey

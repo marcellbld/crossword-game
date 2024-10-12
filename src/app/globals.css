@@ -76,9 +76,12 @@ body {
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
+    /* --primary: 222.2 47.4% 11.2%; */
+    --primary: 204 69.9% 53.1%;
+    --primary-foreground: 210 40% 98%;
+    /* --secondary: 210 40% 96.1%; */
+    --secondary: 24 69.9% 53.1%;
+    /* --secondary-foreground: 222.2 47.4% 11.2%; */
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
@@ -96,13 +99,16 @@ body {
     --chart-5: 340 75% 55%;
 
     --tile-simple: rgb(255, 255, 255);
-    --tile-simple-selected: rgb(241, 247, 253);
-    --tile-question: rgb(210, 228, 248);
-    --tile-question-selected: rgb(186, 216, 255);
-    --board-background: rgb(152, 161, 170);
-    --question: rgb(62, 64, 76);
+    --tile-simple-selected: rgb(232, 246, 255);
+    --tile-question: rgb(193, 221, 255);
+    --tile-question-selected: rgb(171, 213, 226);
+    --tile-creator-block: rgb(172, 187, 206);
+    --tile-empty: rgb(193, 221, 255);
+    --board-background: rgb(247, 238, 218);
+    --question: rgb(34, 35, 44);
 
-    --board: rgb(245, 231, 181);
+    --board: rgb(133, 148, 161);
+    --page-background: rgb(252, 249, 243);
   }
 }
 
@@ -116,18 +122,16 @@ body {
 }
 
 .shadow-box-question {
-  box-shadow: inset 0 -5px 20px rgba(0, 0, 0, 0.15); /* Inner shadow */
+  box-shadow: inset 0 -5px 20px rgba(0, 0, 0, 0.15);
   filter: saturate(200%);
   isolation: isolate;
 }
 
 .shadow-box-simple {
-  box-shadow: inset 0 -5px 20px rgba(75, 75, 75, 0.1); /* Inner shadow */
+  box-shadow: inset 0 -5px 20px rgba(75, 75, 75, 0.1);
   filter: saturate(200%);
   isolation: isolate;
 }
-
-/*floatingtext*/
 
 .floatingText {
   position: fixed;

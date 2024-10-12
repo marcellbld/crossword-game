@@ -14,7 +14,7 @@ const port = parseInt(process.env.PORT || '3000', 10);
 const app = next({ dev, hostname, port });
 const handler = app.getRequestHandler();
 
-// for presentation purposes
+// For presentation purposes. It should be store in a database
 const sessionStore = InMemorySessionStore.instance;
 
 app.prepare().then(() => {

@@ -86,12 +86,5 @@ export default function LetterSelectPanel() {
       {!selectedLetterTile && <div>Select Tile</div>}
       {selectedLetterTile && createLetterTiles()}
     </div>
-
-    // <div className="w-full sm:w-full md:w-1/2 min-h-24 h-24 max-h-32 bg-board p-3">
-    //   <div className="w-full h-full flex justify-center items-center">
-    //     {!selectedLetterTile && <div>Select Tile</div>}
-    //     {selectedLetterTile && createLetterTiles()}
-    //   </div>
-    // </div>
   );
 }

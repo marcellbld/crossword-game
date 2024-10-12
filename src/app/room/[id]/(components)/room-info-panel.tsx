@@ -70,7 +70,6 @@ export default function RoomInfoPanel() {
           </Button>
         )}
       </div>
-      {/* {roomData?.playerCapacity} */}
     </div>
   );
 }

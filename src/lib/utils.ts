@@ -22,7 +22,7 @@ export async function fetchEmoji(emojiName: string):
       return emoji as string;
     } else {
       console.error(`Emoji "${emojiName}" not found`);
-      return null;  // Return null if the emoji is not found
+      return null;
     }
   } catch (error) {
     console.error('Error fetching emoji:', error);

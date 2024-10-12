@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crossword Puzzle App
 
-## Getting Started
+[Demo](#demo)
 
-First, run the development server:
+# About
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A **crossword puzzle** web application built using Next.js. Players can enjoy singleplayer mode with predefined puzzles, create and join random multiplayer games, or create their own crossword puzzles.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Game
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+In the current version of the game, the **board** consists of an 8x8 grid, where the crossword puzzles follow the traditional _arrow crossword_ format. Each **question** occupies a square on the grid, and **answers** can be entered **letter by letter**, either downwards or to the right. Multiple questions are allowed, with a tile serving both the downwards and rightward questions.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Apart from the traditional format, the **question type** can be one of three: **Emoji**, **Color**, or **Text**.
 
-## Learn More
+An **answer** can be entered **letter by letter**, where in the current version of the game, clicking on a tile allows you to choose from 6 different letters, with only one being the correct answer. Each correct answer is **worth 1 point**, while incorrect answers **subtract 2 points**.
 
-To learn more about Next.js, take a look at the following resources:
+When all questions have been answered, the players' scores are displayed, and they have the option to start a new game.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Technology  | Version |
+| ----------- | ------- |
+| Next.js     | 14.2.10 |
+| React       | 18      |
+| Typescript  | 5       |
+| SocketIO    | 4.7.5   |
+| Prisma      | 5.19.1  |
+| PostgreSQL  | 16      |
+| TailwindCSS | 4.7.5   |
 
-## Deploy on Vercel
+## Demo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[Try it out](https://seal-app-vhny2.ondigitalocean.app/)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Work In Progress ⚠️
+
+Please note that this project was created for personal demo purposes. It is in the early stages of development, so some parts may be non-functional, minimally functional, or awaiting modification.

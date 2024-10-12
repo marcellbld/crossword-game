@@ -49,9 +49,6 @@ export default function SocketContextProvider({
     }
 
     socket.on("connect", () => {
-      console.log("CONNECTED");
-      console.log(socket);
-
       setSocket(socket);
     });
 
@@ -68,7 +65,6 @@ export default function SocketContextProvider({
     );
 
     socket.on("disconnect", () => {
-      console.log("DISCONNECTED");
       setSocket(null);
     });
 
