@@ -29,7 +29,7 @@ export default function GamesPanel() {
             />
             <div className="flex flex-col justify-center items-center gap-1">
               <div className="font-semibold">Progress</div>
-              <div>Level {(userLevel ?? -1) + 1}</div>
+              <div>Level {userLevel ?? -1}</div>
             </div>
           </div>
         </div>
