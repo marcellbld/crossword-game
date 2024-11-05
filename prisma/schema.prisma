@@ -53,5 +53,5 @@ model BaseQuestion {
 
 model UserProgress {
   userId          String       @id
-  level           Int          @default(1)
+  level           Int          @default(0)
 }
