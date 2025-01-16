@@ -29,7 +29,7 @@ When all questions have been answered, the players' scores are displayed, and th
 | TailwindCSS | 4.7.5   |
 
 ## Demo
-[Try it out](https://plankton-app-uwxjt.ondigitalocean.app/)
+[Try it out](http://5.75.237.174:3000)
 
 ## Work In Progress ⚠️
 
